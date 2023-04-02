@@ -1,0 +1,238 @@
+*, *::before, *::after{
+  box-sizing: border-box;
+  /* soluciona todos os problemas de espaço */
+}
+.logo{
+  align-self: flex-start;
+  justify-self: flex-start;
+  
+  color: white;
+  font-size: 2rem;
+}
+.intro,
+.main-content {
+    display: flex;
+    flex-direction: column; 
+    padding-left: 2em;
+    padding-right: 2em;   
+}
+main{
+  display: flex;
+}
+.intro,
+.main-content {
+    display: flex;
+    flex-direction: column; 
+    padding-left: 2em;
+    padding-right: 2em;   
+}
+.cadastro-label{
+  margin-bottom: 4rem;
+}
+
+.intro { 
+  justify-content: space-between;
+
+  min-height: 250px;
+  text-align: center;
+  color: #fff;
+  background-color: #dc21fd;
+  background-image: url(./images/page1-transformed.png);
+  min-height: 100vh;
+  background-position: 50%;
+  background-size: cover;
+  padding-bottom: 1.5em   ;
+  width: 50%;
+}
+.website-link{
+  justify-self: left;
+  align-self: flex-start;
+}
+.main-content {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+
+}
+.main-content {
+  text-align: left;
+  padding-top: 0;
+}
+
+.intro-welcome{
+
+   text-align: right;
+   width: 60%;
+   align-self: center;
+}
+.intro-welcome > h1{
+  margin: 0;
+  white-space: nowrap;
+  margin-bottom: 4rem;
+}
+.intro-welcome > p{
+  align-self: flex-start;
+  font-size: 1.25rem;
+}
+.intro-welcome-header{
+  font-size: 3.5rem;
+  color: white;
+}
+
+.main-content-container{
+  margin-top: 2.5rem;
+  width: 90%;
+  height: 65vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.input:focus{
+  color: black;
+  outline-color: #dc21fd;
+
+}
+
+.input{
+  color: black;
+  padding: 1rem;
+  padding-left: 0;
+  margin-bottom: 2rem;
+  width: 90%;
+  outline: 0;
+  border: 0;
+  border-bottom: 1px solid ;
+  text-align: left;
+  margin-top: 0rem;
+}	
+
+.Mui-focused{
+  background-color: #D9D9D9;
+  transition: 0.5s;
+  border-color: #5F4BB6;
+}
+.Mui-active{
+  border-color: #5F4BB6;
+}
+
+
+.main-content-container > p{
+  margin-top: 2rem;
+}
+.main-content-container > p > a{
+  color: black;
+  font-weight: 700;
+}
+
+.main-content-container > h1{
+  font-size: 2rem;
+}
+.login{
+  text-align: left;
+  justify-self: left;
+  align-self: flex-start;
+  font-size: 2rem;
+  margin-top: 4rem;
+}
+
+.login-label-wrapper{
+  width: 90%;
+}
+
+button{
+  outline: none;
+  font-size: 1rem;
+  padding: 1rem;
+  background-color: #5F4BB6;
+  width: 90%;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  white-space: nowrap;
+  margin-top: 2rem;
+ 
+}
+.signup-navigation > a:hover {
+  color: #342965;
+  text-shadow: 0px 6px 20px #6451B8;
+  transition: 0.5s;
+}
+.signup-navigation > a {
+  transition: 0.5s;
+}
+
+button:hover{
+  background-color: #342965;
+  box-shadow: 0px 15px 20px #6451B8;
+  color: #fff;
+  transform: translateY(-7px);
+} .wrapper-signup-navigation{
+  margin-bottom: 5rem;
+}
+
+
+@media(max-width:768px){
+ 
+  .intro-welcome-header{
+    font-size: 2.5rem;
+  }
+    main{
+      overflow: hidden;
+    }
+  .intro{
+    width: 100%;
+  }
+  main{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+  .logo{
+    align-self: center;
+  }
+  .intro{
+    width: 100%;
+    min-height: 50vh;
+  }
+  .main-content{
+    width: 100%;
+    max-height: 100vh;
+  }
+  .intro-welcome{
+
+    text-align: center;
+    width: 100%;
+    align-self: center
+ }
+ .login{
+  text-align: center;
+ }
+ h1{
+  margin-bottom: 4rem;
+ }
+ .input{
+    margin-bottom: 1rem;
+ }
+
+ .wrapper-signup-navigation{
+  margin-bottom: 10rem;
+}
+
+ .website-link{
+  display:none
+ }
+
+ button{
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+ }
+}
+
