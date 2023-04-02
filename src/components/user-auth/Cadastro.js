@@ -85,7 +85,7 @@ function Cadastro() {
             ]}
           ></Input>
 
-          <button>Fazer Login</button>
+          <button>Fazer Cadastro</button>
           <div className="wrapper-signup-navigation">
             <p className="signup-navigation">
               Já possui uma conta? <a href="Login">Logue-se</a>
