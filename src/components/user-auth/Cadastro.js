@@ -69,12 +69,21 @@ function Cadastro() {
   const validarNome = () => {
     const nome = inputs.nome;
     let valido = true;
-
+    // validar nome, somente letras e espaços
     if (nome.length === 0) {
       setMensagensErro((mensagensErro) => ({
         ...mensagensErro,
         nome: {
           mensagem: "Campo obrigatório",
+          deuErro: true,
+        },
+      }));
+      valido = false;
+    } else if (!nome.match("/^[a-zA-Z ]*$/")) {
+      setMensagensErro((mensagensErro) => ({
+        ...mensagensErro,
+        nome: {
+          mensagem: "Nome inválido",
           deuErro: true,
         },
       }));
@@ -157,11 +166,13 @@ function Cadastro() {
         },
       }));
       valido = false;
-    } else if (!senha.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)) {
+    } else if (
+      //regex para validar senha, inclua pelo menos 1 número e 1 letra, e pode ter caracteres especiais
+      !senha.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,20}$/)) {
       setMensagensErro((mensagensErro) => ({
         ...mensagensErro,
         senha: {
-          mensagem: "Deve possuir pelo menos 1 número e 1 letra",
+          mensagem: "Deve possuir pelo menos 1 número e 1 letra, e não pode ter caracteres especiais",
           deuErro: true,
         },
       }));
