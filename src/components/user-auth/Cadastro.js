@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import "./user-auth.css";
+import styles from "./user-auth.module.css";
 import { TextField } from "@mui/material";
 
 function Cadastro() {
@@ -218,26 +218,27 @@ function Cadastro() {
         rel="stylesheet"
       ></link>
 
-      <section className="intro">
-        <h1 className="logo">Rachei</h1>
-        <div className="intro-welcome">
-          <h1 className="intro-welcome-header">Bem vindo</h1>
+      <section className={styles["intro"]}>
+         
+        <img src={require('./images/logo_white.png')} className={styles["logo"]}></img>
+        <div className={styles["intro-welcome"]}>
+          <h1 className={styles["intro-welcome-header"]}>Bem vindo</h1>
           <p>
             <strong>Preencha seus dados</strong> para ter acesso ao sistema
           </p>
         </div>
-        <h1 className="website-link">www.rachei.com.br</h1>
+        <h1 className={styles["website-link"]}>www.rachei.com.br</h1>
       </section>
-      <section className="main-content">
-        <div className="login-label-wrapper">
-          <h1 className="login cadastro-label">Cadastre-se</h1>
+      <section className={styles["main-content"]}>
+        <div className={styles["login-label-wrapper"]}>
+          <h1 className={[styles["login"], styles['cadastro-label']].join(' ')}>Cadastre-se</h1>
         </div>
-        <form onSubmit={handleCadastro} className="main-content-container">
+        <form onSubmit={handleCadastro} className={styles["main-content-container"]}>
           <TextField
             variant="filled"
             type="text"
             name="nome"
-            className="input"
+            className={styles["input"]}
             label="Nome de Usuário"
             placeholder="ex: João da Silva"
             inputProps={{ maxLength: 120 }}
@@ -272,7 +273,7 @@ function Cadastro() {
             variant="filled"
             type="email"
             name="email"
-            className="input"
+            className={styles["input"]}
             label="Email"
             placeholder="ex: joaosilva@gmail.com"
             value={inputs.email}
@@ -305,7 +306,7 @@ function Cadastro() {
             variant="filled"
             type="text"
             name="cpf"
-            className="input"
+            className={styles["input"]}
             label="CPF"
             placeholder="123.456.789-00"
             inputProps={{ maxLength: 14 }}
@@ -332,7 +333,7 @@ function Cadastro() {
             variant="filled"
             type="password"
             name="senha"
-            className="input"
+            className={styles["input"]}
             placeholder="Senha"
             label="Senha"
             helperText={mensagensErro.senha.mensagem}
@@ -358,10 +359,10 @@ function Cadastro() {
             ]}
           ></TextField>
 
-          <button type="submit">Fazer Cadastro</button>
-          <div className="wrapper-signup-navigation">
-            <p className="signup-navigation">
-              Já possui uma conta? <a href="Login">Logue-se</a>
+          <button className={styles['button']} type="submit">Fazer Cadastro</button>
+          <div className={styles["wrapper-signup-navigation"]}>
+            <p className={styles["signup-navigation"]}>
+              Já possui uma conta? <a href="login">Logue-se</a>
             </p>
           </div>
         </form>

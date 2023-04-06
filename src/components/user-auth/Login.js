@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import "./user-auth.css";
+import styles from "./user-auth.module.css";
 import { TextField } from "@mui/material";
 
 function Login() {
@@ -85,30 +85,30 @@ function Login() {
         rel="stylesheet"
       ></link>
 
-      <section className="intro">
-        <h1 className="logo">Rachei</h1>
-        <div className="intro-welcome">
-          <h1 className="intro-welcome-header">Bem vindo</h1>
+      <section className={styles['intro']}>
+      <img src={require('./images/logo_white.png')} className={styles["logo"]}></img>
+        <div className={styles["intro-welcome"]}>
+          <h1 className={styles["intro-welcome-header"]}>Bem vindo</h1>
           <p>
             <strong>Preencha seus dados</strong> para ter acesso ao sistema
           </p>
         </div>
-        <h1 className="website-link">www.rachei.com.br</h1>
+        <h1 className={styles["website-link"]}>www.rachei.com.br</h1>
       </section>
-      <section className="main-content">
-        <div className="login-label-wrapper">
-          <h1 className="login">Logar-se</h1>
+      <section className={styles["main-content"]}>
+        <div className={styles["login-label-wrapper"]}>
+          <h1 className={styles["login"]}>Logar-se</h1>
         </div>
-        <form className="main-content-container login-container">
+        <form className={[styles["main-content-container"], styles["login-container"]].join(' ')}>
           <TextField
             variant="filled"
             label="Email"
             type="email"
             name="email"
-            className="input"
+            className={styles["input"]}
             error={mensagensErro.email.deuErro}
             helperText={mensagensErro.email.mensagem}
-            onBlur={validarEmail}
+            //onBlur={validarEmail}
             value={inputs.email}
             onChange={(event) => {
               setInputs((inputs) => ({
@@ -137,7 +137,7 @@ function Login() {
             name="senha"
             error={mensagensErro.senha.deuErro}
             helperText={mensagensErro.senha.mensagem}
-            onBlur={validarSenha}
+           // onBlur={validarSenha}
             onChange={(event) => {
               setInputs((inputs) => ({
                 ...inputs,
@@ -145,7 +145,7 @@ function Login() {
               }));
             }}
             value={inputs.senha}
-            className="input"
+            className={styles["input"]}
             placeholder="Senha"
             inputProps={{ maxLength: 20 }}
             sx={[
@@ -159,9 +159,9 @@ function Login() {
             ]}
           ></TextField>
 
-          <button>Fazer Login</button>
-          <p className="signup-navigation">
-            Não possui uma conta? <a href="Cadastro">Cadastre-se</a>
+          <button className={styles["button"]}>Fazer Login</button>
+          <p className={styles["signup-navigation"]}>
+            Não possui uma conta? <a href="cadastro">Cadastre-se</a>
           </p>
         </form>
       </section>
