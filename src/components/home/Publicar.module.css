@@ -1,0 +1,111 @@
+.roxo {
+    display: flex;
+    width: 100%;
+  background-color: #5f4bb6;
+  padding: 1.75rem;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 90%;
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 30px;
+}
+.content .input{
+  width: 50%;
+  border-radius: 30px;
+  padding: 1rem;
+  border: 0;
+  background-color: #EBEBEB;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.content textarea{
+  width: 50%;
+  border-radius: 30px;
+  padding: 1rem;
+  border: 0;
+  background-color: #EBEBEB;
+  margin-top: 1rem;
+  height: 20vh;
+  margin-bottom: 1rem;
+}
+input{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.main{
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.main h1{
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.endereco-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.endereco{
+  width: 50%;
+}
+.submit{
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  align-self: center;
+  width: 50%;
+  border: 0;
+  background-color: #5f4bb6;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  border-radius: 66px;
+  padding: 2rem;
+}
+.submit:hover{
+  background-color: #4b3a9d;
+  cursor: pointer;
+}
+h2{
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.endereco-item input{
+  width: 100%;
+  border-radius: 30px;
+  padding: 1rem;
+  border: 0;
+  background-color: #EBEBEB;
+
+}
+
+@media(max-width: 768px){
+  .content{
+    width: 90%;
+  }
+  .content .input{
+    width: 100%;
+  }
+  .content textarea{
+    width: 100%;
+  }
+  .submit{
+    width: 100%;
+  }
+  .endereco{
+    width: 100%;
+  }
+  .endereco-item{
+    flex-direction: column;
+  }
+}

@@ -13,7 +13,9 @@ function Home() {
         <div className={style["searchbar"]}>
           <input placeholder="Pequise por estado ou cidade ex: Santa Catarina, Florianópolis etc..."></input>
           <IconButton
+          className={style["search-icon"]}
             sx={{
+              className: style["search-icon"],
               borderRadius: "0px 41.5px 41.5px 0px",
               backgroundColor: "#5f4bb6",
               height: "3.5rem",

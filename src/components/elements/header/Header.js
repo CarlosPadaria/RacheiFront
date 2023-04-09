@@ -42,6 +42,9 @@ function Header() {
     >
       <ul>
         <li>
+          <a href="publicar">Publicar</a>
+        </li>
+        <li>
           <a href="/login">Gerenciar publicações</a>
         </li>
         <li>
@@ -127,9 +130,11 @@ function Header() {
             </Menu>
           </li>
           <li>
-            <button className={style["button"]}>
+            <a className={style['publicar-button']} href="publicar">
+            <button className={style["button"]} >
               <AddIcon sx={{ fontSize: "2.25rem" }}></AddIcon> Publicar
             </button>
+            </a>
           </li>
         </ul>
       </nav>
