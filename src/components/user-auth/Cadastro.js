@@ -220,7 +220,7 @@ function Cadastro() {
 
       <section className={styles["intro"]}>
          
-        <img src={require('./images/logo_white.png')} className={styles["logo"]}></img>
+        <img src={require('./images/logo_white.png')} alt="Logo escrito Rachei" className={styles["logo"]}></img>
         <div className={styles["intro-welcome"]}>
           <h1 className={styles["intro-welcome-header"]}>Bem vindo</h1>
           <p>

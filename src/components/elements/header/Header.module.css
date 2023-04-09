@@ -1,0 +1,300 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* soluciona todos os problemas de espaço */
+}
+a {
+  transition: 0.25s;
+  text-decoration: none;
+}
+.html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+img {
+  width: 150px;
+}
+.header {
+  background-color: #fff;
+}
+a {
+  margin: 0;
+  padding: 0;
+}
+.header nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  padding: 2rem;
+}
+
+.logo-menu .menu-button {
+  display: none;
+}
+
+.nav-list li {
+  letter-spacing: 1.5;
+  font-size: 1.25rem;
+  margin-left: 2rem;
+}
+.nav-list {
+  display: flex;
+  flex-direction: row;
+}
+.nav-list a {
+  transition: 0.25s;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+ul {
+  list-style: none;
+}
+
+.logo-menu {
+  display: flex;
+  align-items: center;
+}
+
+
+.drawer {
+  display: none;
+}
+.nav-list a:hover {
+  color: #5f4bb6;
+  transition: 0.25s;
+}
+a:hover{
+  transition: 0.25s;
+  color: #5f4bb6;
+
+}
+
+.user-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #b8b8b8;
+  border-radius: 50px;
+  width: 100%;
+  font-size: 1rem;
+  gap: 0.25rem;
+  transition: 0.25s;
+}
+.user-menu:hover{
+  border-color: #5f4bb6;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.header .button {
+  padding: 0.5rem 2rem;
+  background-color: #5f4bb6;
+  border: 0;
+  border-radius: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.list{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+.list li{
+  margin: 1rem;
+  text-decoration: none;
+  color: black;
+}
+.list li a{
+  text-decoration: none;
+  color: black;
+}
+/*
+.header {
+  width: 100%;
+  padding: 1.5rem 1.5rem;
+  background-color: #fff;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main{
+  max-width: 1800px;
+}
+.menu-button {
+  display: none;
+  border: 0px solid;
+  background-color: white;
+}
+.logo-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.align-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header nav {
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.header a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.25rem;
+}
+
+.header .button {
+  padding: 0.5rem 2rem;
+  background-color: #5f4bb6;
+  border: 0;
+  border-radius: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+}
+img {
+  max-width: 100px;
+  padding: 0;
+  margin: 0;
+}
+.drawer {
+  display: none;
+}
+.user-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #b8b8b8;
+  border-radius: 50px;
+  width: 100%;
+  font-size: 1rem;
+  gap: 0.25rem;
+}
+
+@media (max-width: 1200px) {
+  .menu-button{
+    display: block;
+  }
+  .nav a {
+    display: none;
+  }
+  .header {
+    margin: 0;
+  }
+  .header nav{
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+  .drawer{
+    display: block;
+  }
+ 
+}*/
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem 1rem;
+  }
+  .header .button {
+    padding: 0.5rem 1rem;
+  }
+  .nav-list {
+    display: none;
+  }
+  .logo-menu .menu-button {
+    display: block;
+  }
+  .drawer {
+    display: flex;
+  }
+} /*
+@media (max-width: 768px){
+  
+  
+  .header .button{
+    margin-bottom: 0rem;
+    padding: 0.5rem 0.5rem;
+  }
+  .user-menu{
+    display: none;
+  }
+}
+.list ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  color: black;
+  gap: 1rem;
+  padding: 1rem;
+
+}
+.list li{
+  list-style-type: none
+}
+@media (max-width: 450px){
+  .header .button{
+    margin-bottom: 1rem;
+  }
+  .user-menu{
+    display: none;
+  }
+}
+/*
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5){
+
+  html,
+  body{
+    width:100%;
+    overflow-x:hidden;
+  }
+
+}*/
