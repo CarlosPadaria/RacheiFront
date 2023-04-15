@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Menu, MenuItem, Drawer } from "@mui/material";
 import logoSVG from "./logo_black_2.svg";
 import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -51,7 +52,7 @@ function Header() {
           <a href="/login">Minhas publicações</a>
         </li>
         <li>
-          <a href="/login">Perfil</a>
+          <a href="/dadosDaConta">Perfil</a>
         </li>
         <li>
           <a href="/login">Favoritos</a>
@@ -124,7 +125,9 @@ function Header() {
               onClose={handleClose}
               keepMounted
             >
-              <MenuItem>Perfil</MenuItem>
+              <MenuItem 
+              component={Link} to="/dadosDaConta"
+              >Perfil</MenuItem>
               <MenuItem>Favoritos</MenuItem>
               <MenuItem>Sair</MenuItem>
             </Menu>
