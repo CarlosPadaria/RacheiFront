@@ -30,6 +30,7 @@ const DadosDaConta = () => {
               </li>
             </ul>
           </section>
+          <div className={style['content-wrapper']}>
           <section className={style["content"]}>
             <h1>Meu Perfil</h1>
             <div className={style["content-items"]}>
@@ -40,7 +41,10 @@ const DadosDaConta = () => {
                 <input className={style['disabled']} id="cpf" name="cpf" disabled value={'123.456.789.12'}></input>
                 <button className={style['submit']}>Salvar Alterações</button>
             </div>
+            
           </section>
+          
+          </div>
         </div>
       </main>
     </div>
