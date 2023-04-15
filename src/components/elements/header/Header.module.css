@@ -30,7 +30,7 @@ a {
   justify-content: space-around;
   align-items: center;
   height: 10vh;
-  padding: 2rem;
+  padding: 3.5rem;
 }
 
 .logo-menu .menu-button {
@@ -39,7 +39,7 @@ a {
 
 .nav-list li {
   letter-spacing: 1.5;
-  font-size: 1.25rem;
+  font-size: 1.11rem;
   margin-left: 2rem;
 }
 .nav-list {
@@ -242,7 +242,7 @@ img {
   }
  
 }*/
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .header {
     padding: 1rem 1rem;
   }

@@ -26,9 +26,9 @@ html {
 .searchbar input {
   width: 60%;
   border-radius: 41.5px 0px 0px 41.5px;
-  padding: 3rem;
+  padding: 2rem;
   border: 0;
-  font-size: 32px;
+  font-size: 1.25rem;
   height: 3.5rem;
 }
 .searchbar input::placeholder{

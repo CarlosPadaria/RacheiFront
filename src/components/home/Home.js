@@ -18,8 +18,8 @@ function Home() {
               className: style["search-icon"],
               borderRadius: "0px 41.5px 41.5px 0px",
               backgroundColor: "#5f4bb6",
-              height: "3.5rem",
-              padding: "3rem",
+              height: "3.0rem",
+              padding: "2rem",
               width: "10%",
               '&:hover': {
                 backgroundColor: "#433582",
