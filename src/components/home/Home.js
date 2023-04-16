@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 
 function Home() {
   return (
-    <div>
+    <div >
       <Header></Header>
       <main className={style["main"]}>
         <div className={style["roxo"]}></div>

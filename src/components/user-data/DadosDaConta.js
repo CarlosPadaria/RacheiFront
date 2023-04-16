@@ -5,9 +5,9 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ShieldIcon from '@mui/icons-material/Shield';
 const DadosDaConta = () => {
   return (
-    <div>
+    <div className={style['dados-wrapper']}>
       <Header></Header>
-      <main>
+      <main className={style.main}>
         <div className={style["roxo"]}></div>
         <div className={style["section-wrapper"]}>
           <section className={style["items"]}>
