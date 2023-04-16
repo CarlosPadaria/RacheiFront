@@ -49,13 +49,13 @@ function Header() {
           <a href="/login">Gerenciar publicações</a>
         </li>
         <li>
-          <a href="/login">Minhas publicações</a>
+          <a href="/minhasPublicacoes">Minhas publicações</a>
         </li>
         <li>
           <a href="/dadosDaConta">Perfil</a>
         </li>
         <li>
-          <a href="/login">Favoritos</a>
+          <a href="/favoritos">Favoritos</a>
         </li>
         <li>
           <a href="/login">Sair</a>
@@ -100,7 +100,7 @@ function Header() {
             </a>
           </li>
           <li>
-            <a className={style["align-icons"]} href="/login">
+            <a className={style["align-icons"]} href="/minhasPublicacoes">
               <GridViewIcon sx={{ fontSize: "2.25rem" }}></GridViewIcon>Minhas
               publicações
             </a>
@@ -128,7 +128,9 @@ function Header() {
               <MenuItem 
               component={Link} to="/dadosDaConta"
               >Perfil</MenuItem>
-              <MenuItem>Favoritos</MenuItem>
+              <MenuItem
+              component={Link} to="/favoritos"
+              >Favoritos</MenuItem>
               <MenuItem>Sair</MenuItem>
             </Menu>
           </li>

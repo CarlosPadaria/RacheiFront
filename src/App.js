@@ -8,6 +8,8 @@ import './index.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./components/home/Home";
 import Seguranca from "./components/user-data/Seguranca";
+import Favoritos from "./components/home/Favoritos";
+import MinhasPublicacoes from "./components/home/MinhasPublicacoes";
 
 function App() {
   return (  
@@ -19,6 +21,8 @@ function App() {
       <Route path="/publicar" element={<Publicar />}></Route>
       <Route path="/dadosDaConta" element={<DadosDaConta />}></Route>
       <Route path="/seguranca" element={<Seguranca />}></Route>
+      <Route path="/favoritos" element={<Favoritos />}></Route>
+      <Route path="/minhasPublicacoes" element={<MinhasPublicacoes />}></Route>
     </Routes>
    </BrowserRouter>
   );
