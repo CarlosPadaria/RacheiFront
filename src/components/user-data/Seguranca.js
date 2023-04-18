@@ -21,9 +21,9 @@ const Seguranca = () => {
   };
 
   return (
-    <div>
+    <div className={style['seguranca-wrapper']}>
       <Header></Header>
-      <main>
+      <main className={style.main}>
         <div className={style["roxo"]}></div>
         <div className={style["section-wrapper"]}>
           <section className={style["items"]}>
