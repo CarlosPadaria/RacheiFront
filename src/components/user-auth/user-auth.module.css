@@ -285,3 +285,11 @@ main{
  }
 }
 
+.error{
+  color: #f00;
+}
+
+.errorDiv{
+  margin-bottom: 1rem;
+}
+

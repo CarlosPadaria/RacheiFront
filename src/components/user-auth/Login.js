@@ -2,12 +2,18 @@ import * as React from "react";
 import { useState } from "react";
 import styles from "./user-auth.module.css";
 import { TextField } from "@mui/material";
+import {useAuth} from "../../AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 function Login() {
+  const { user, setUser, isLoading, setIsLoading } = useAuth();
   const [inputs, setInputs] = useState({
     email: "",
     senha: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
   const [mensagensErro, setMensagensErro] = useState({
     email: {
       mensagem: "",
@@ -19,6 +25,21 @@ function Login() {
     },
     
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoading == false){
+    //  alert(user)
+      if(user != null){
+      //  alert("oi")
+    //  alert('navegando')
+      navigate('/');
+        //return <Navigate to="/login"></Navigate>;
+      }
+    }
+  }, [user, isLoading]);
+
 
   const validarEmail = () => {
     const email = inputs.email;
@@ -72,6 +93,23 @@ function Login() {
     return valido
   }
 
+  const handleLogar = async (event) => {
+    event.preventDefault();
+    const emailValido = validarEmail();
+    const senhaValida = validarSenha();
+
+    if (emailValido && senhaValida) {
+      try{
+        const response = await axios.post('http://localhost:8080/usuarios/login', inputs);
+        localStorage.setItem('user',JSON.stringify(response.data));
+        setUser(response.data);
+      }catch(error){
+      //  alert(error)
+        setErrorMessage("Email ou senha incorretos");
+      }
+    }
+  }
+
   return (
     <main>
       <link rel="preconnect" href="https://fonts.googleapis.com"></link>
@@ -99,7 +137,11 @@ function Login() {
         <div className={styles["login-label-wrapper"]}>
           <h1 className={styles["login"]}>Logar-se</h1>
         </div>
-        <form className={[styles["main-content-container"], styles["login-container"]].join(' ')}>
+        
+        <form className={[styles["main-content-container"], styles["login-container"]].join(' ')} onSubmit={handleLogar}>
+          <div className={styles['errorDiv']}><p className={styles['error']}>
+            {errorMessage}
+            </p></div>
           <TextField
             variant="filled"
             label="Email"

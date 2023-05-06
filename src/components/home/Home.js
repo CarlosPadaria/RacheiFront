@@ -3,8 +3,17 @@ import Header from "../elements/header/Header";
 import style from "./Home.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
+import { useContext } from "react";
+import  {useAuth}  from "../../AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Home() {
+  const { user, setUser, isLoading } = useAuth();
+
+
+  
+  
   return (
     <div >
       <Header></Header>

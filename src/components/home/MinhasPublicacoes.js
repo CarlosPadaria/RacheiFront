@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../elements/header/Header";
 import style from "./Home.module.css";
+import { useAuth } from "../../AuthContext";
+import { Navigate } from "react-router-dom";
 
 function MinhasPublicacoes() {
   return (

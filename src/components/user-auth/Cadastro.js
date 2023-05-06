@@ -2,14 +2,21 @@ import * as React from "react";
 import { useState } from "react";
 import styles from "./user-auth.module.css";
 import { TextField } from "@mui/material";
+import axios from "axios";
+import {useAuth} from "../../AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
+  const { user, setUser, isLoading, setIsLoading } = useAuth();
   const [inputs, setInputs] = useState({
     nome: "",
     email: "",
     cpf: "",
     senha: "",
   });
+  
+  const[mensagemErroCadastro, setMensagemErroCadastro] = useState("");
 
   const [mensagensErro, setMensagensErro] = useState({
     nome: {
@@ -29,6 +36,21 @@ function Cadastro() {
       deuErro: false,
     },
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoading == false){
+    //  alert(user)
+      if(user != null){
+      //  alert("oi")
+    //  alert('navegando')
+      navigate('/');
+        //return <Navigate to="/login"></Navigate>;
+      }
+    }
+  }, [user, isLoading]);
+
 
   const validarEmail = () => {
     const email = inputs.email;
@@ -61,7 +83,6 @@ function Cadastro() {
           deuErro: false,
         },
       }));
-      valido = false;
     }
     return valido;
   };
@@ -79,7 +100,7 @@ function Cadastro() {
         },
       }));
       valido = false;
-    } else if (!nome.match("/^[a-zA-Z ]*$/")) {
+    } else if (!nome.match(/^[a-zA-ZÀ-ú ]*$/)) {
       setMensagensErro((mensagensErro) => ({
         ...mensagensErro,
         nome: {
@@ -168,11 +189,13 @@ function Cadastro() {
       valido = false;
     } else if (
       //regex para validar senha, inclua pelo menos 1 número e 1 letra, e pode ter caracteres especiais
-      !senha.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,20}$/)) {
+      !senha.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,20}$/)
+    ) {
       setMensagensErro((mensagensErro) => ({
         ...mensagensErro,
         senha: {
-          mensagem: "Deve possuir pelo menos 1 número e 1 letra, e não pode ter caracteres especiais",
+          mensagem:
+            "Deve possuir pelo menos 1 número e 1 letra, e não pode ter caracteres especiais",
           deuErro: true,
         },
       }));
@@ -188,6 +211,13 @@ function Cadastro() {
     }
     return valido;
   };
+  const validarTudo = () => {
+    const emailValido = validarEmail();
+    const nomeValido = validarNome();
+    const cpfValido = validarCpf();
+    const senhaValida = validarSenha();
+    return emailValido && nomeValido && cpfValido && senhaValida;
+  };
 
   // faz uma máscara para o cpf
   const handleCpfChange = (event) => {
@@ -201,8 +231,23 @@ function Cadastro() {
       cpf: value,
     }));
   };
-  const handleCadastro = (event) => {
+  const handleCadastro = async (event) => {
     event.preventDefault();
+    if (validarTudo()) {
+    // alert("teste!")
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/usuarios",
+          inputs
+        );
+        setUser(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));  
+        //console.log(response.data); // aqui você pode tratar a resposta da API
+      } catch (error) {
+        alert(error)
+          setMensagemErroCadastro("Usuário já cadastrado!");
+      }
+    }
   };
 
   return (
@@ -219,8 +264,11 @@ function Cadastro() {
       ></link>
 
       <section className={styles["intro"]}>
-         
-        <img src={require('./images/logo_white.png')} alt="Logo escrito Rachei" className={styles["logo"]}></img>
+        <img
+          src={require("./images/logo_white.png")}
+          alt="Logo escrito Rachei"
+          className={styles["logo"]}
+        ></img>
         <div className={styles["intro-welcome"]}>
           <h1 className={styles["intro-welcome-header"]}>Bem vindo</h1>
           <p>
@@ -231,9 +279,17 @@ function Cadastro() {
       </section>
       <section className={styles["main-content"]}>
         <div className={styles["login-label-wrapper"]}>
-          <h1 className={[styles["login"], styles['cadastro-label']].join(' ')}>Cadastre-se</h1>
+          <h1 className={[styles["login"], styles["cadastro-label"]].join(" ")}>
+            Cadastre-se
+          </h1>
         </div>
-        <form onSubmit={handleCadastro} className={styles["main-content-container"]}>
+        <form
+          onSubmit={handleCadastro}
+          className={styles["main-content-container"]}
+        >
+          <div>
+            <p className={styles['error']}>{mensagemErroCadastro}</p>
+          </div>
           <TextField
             variant="filled"
             type="text"
@@ -359,7 +415,9 @@ function Cadastro() {
             ]}
           ></TextField>
 
-          <button className={styles['button']} type="submit">Fazer Cadastro</button>
+          <button className={styles["button"]} onClick={handleCadastro} type="submit">
+            Fazer Cadastro
+          </button>
           <div className={styles["wrapper-signup-navigation"]}>
             <p className={styles["signup-navigation"]}>
               Já possui uma conta? <a href="login">Logue-se</a>

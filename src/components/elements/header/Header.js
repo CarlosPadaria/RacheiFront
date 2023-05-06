@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Header.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -11,6 +11,9 @@ import { Menu, MenuItem, Drawer } from "@mui/material";
 import logoSVG from "./logo_black_2.svg";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext, { useAuth } from "../../../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,6 +26,23 @@ function Header() {
   };
 
   const [state, setState] = useState({ left: false });
+  const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoading == false){
+    //  alert(user)
+      if(user == null){
+      //  alert("oi")
+    //  alert('navegando')
+      navigate('/login');
+        //return <Navigate to="/login"></Navigate>;
+      }
+    }
+  }, [user, isLoading]);
+
+
+
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -43,22 +63,27 @@ function Header() {
     >
       <ul>
         <li>
-          <a href="publicar">Publicar</a>
+          <Link to="publicar">Publicar</Link>
         </li>
         <li>
-          <a href="/login">Gerenciar publicações</a>
+          <Link to="/login">Gerenciar publicações</Link>
         </li>
         <li>
-          <a href="/minhasPublicacoes">Minhas publicações</a>
+          <Link to="/minhasPublicacoes">Minhas publicações</Link>
         </li>
         <li>
-          <a href="/dadosDaConta">Perfil</a>
+        <Link to="/dadosDaConta">Perfil</Link>
         </li>
         <li>
-          <a href="/favoritos">Favoritos</a>
+          <Link to="/favoritos">Favoritos</Link>
         </li>
         <li>
-          <a href="/login">Sair</a>
+          <Link onClick={
+            () => {
+           //   logout();
+
+            }
+          } >Sair</Link>
         </li>
       </ul>
     </div>
@@ -114,8 +139,9 @@ function Header() {
             >
               <AccountCircleIcon
                 sx={{ fontSize: "2.25rem" }}
-              ></AccountCircleIcon>{" "}
-              Roberto<ArrowDropDownIcon></ArrowDropDownIcon>
+              ></AccountCircleIcon>
+              {user?.nome}
+              <ArrowDropDownIcon></ArrowDropDownIcon>
             </button>
             <Menu
               className={style["menu"]}
