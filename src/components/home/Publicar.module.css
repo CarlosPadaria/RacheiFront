@@ -16,25 +16,28 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 30px;
 }
+.content .select{
+  width: 100%;
+  border-radius: 30px;
+  padding: 1rem;
+  border: 0;
+  background-color: #EBEBEB;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .content .input{
   width: 50%;
-  border-radius: 30px;
+ /* 
   padding: 1rem;
   border: 0;
-  background-color: #EBEBEB;
+ 
   margin-top: 1rem;
   margin-bottom: 1rem;
+  transition: 1s;*/
 }
-.content textarea{
-  width: 50%;
-  border-radius: 30px;
-  padding: 1rem;
-  border: 0;
-  background-color: #EBEBEB;
-  margin-top: 1rem;
-  height: 20vh;
-  margin-bottom: 1rem;
-}
+
+
 input{
   margin-top: 1rem;
   margin-bottom: 1rem;
