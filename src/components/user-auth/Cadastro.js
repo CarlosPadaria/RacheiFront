@@ -312,18 +312,6 @@ function Cadastro() {
                 }))
               /*setSenha(event.target.value)*/
             }
-            sx={[
-              {
-                "&:after": {
-                  borderColor: "#5F4BB6",
-                  backgroundColor: "#342965",
-                },
-              },
-              {
-                marginTop: "2.75rem",
-                marginBottom: "2rem",
-              },
-            ]}
           ></TextField>
           <TextField
             variant="filled"
