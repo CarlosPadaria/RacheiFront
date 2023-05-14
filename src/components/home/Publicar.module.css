@@ -17,7 +17,7 @@
   border-radius: 30px;
 }
 
-.content .select{
+.select{
   width: 100%;
   padding: 0.25rem;
   border: 0;
@@ -58,6 +58,20 @@ input{
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+}
+.select-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  text-align: left;
+  width: 100%;
+}
+.error{
+  font-size: 0.75rem;
+  color: #E06A2F;
+  margin-left: 1rem;
+  margin-top: 0;
 }
 .endereco{
   width: 50%;

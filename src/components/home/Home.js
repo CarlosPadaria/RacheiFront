@@ -10,9 +10,6 @@ import { useEffect } from "react";
 
 function Home() {
   const { user, setUser, isLoading } = useAuth();
-
-
-  
   
   return (
     <div >
