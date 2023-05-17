@@ -294,6 +294,17 @@ function Cadastro() {
             variant="filled"
             type="text"
             name="nome"
+            sx={[
+              {
+                "&:after": {
+                  borderColor: "#5F4BB6",
+                  backgroundColor: "#342965",
+                },
+              },
+              {
+                marginBottom: "2rem",
+              },
+            ]}
             className={styles["input"]}
             label="Nome de Usuário"
             placeholder="ex: João da Silva"
