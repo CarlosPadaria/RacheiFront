@@ -14,7 +14,7 @@ function Home() {
   const [publicacoes, setPublicacoes] = useState([]);
   const [imagens, setImagens] = useState([]);
   const [image, setImage] = useState(null);
-/*
+  /*
   useEffect(() => {
     async function fetchPublications() {
       const response = await axios.get("http://localhost:8080/publicacoes");
@@ -22,33 +22,35 @@ function Home() {
     }
     fetchPublications();
   }, []);*/
-  
+
   useEffect(() => {
     // Solicita as publicações
-    axios.get('http://localhost:8080/publicacoes')
-      .then(response => {
-        setPublicacoes(response.data);
-        const imagensIds = response.data.map(publicacao => publicacao.id);
-        axios.get(`http://localhost:8080/imagens/publicacao/${imagensIds[0]}`, { responseType: 'arraybuffer' })
-        .then(response => {})
-        // Obtém as imagens das publicações
-     /*   const imagensIds = response.data.map(publicacao => publicacao.id);
-        axios.all(
-          imagensIds.map(imagemId => axios.get(`http://localhost:8080/imagens/publicacao/${imagemId}`, { responseType: 'arraybuffer' }))
-        ).then(responses => {
-          setImagens(responses.map(response => URL.createObjectURL(new Blob([response.data]))));
-        });*/
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    axios.get("http://localhost:8080/publicacoes").then((response) => {
+      //response.data;
+     // console.log(response.data[0])
+     let publicacoes = response.data;
+      // setPublicacoes(response.data);
+     // const imagensIds = response.data.map((publicacao) => publicacao.id);
+      publicacoes
+        .map((publicacao) => {
+          axios
+            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
+            .then((responses) => {
+              
+              // Transformamos os dados binários da imagem em uma URL
+              publicacao.imagem = "data:image/png;base64," + responses.data[0].conteudo;
+              // const url = URL.createObjectURL(new Blob([response.data[0].conteudo]))
+           //   console.log(response.data[0].conteudo)
+            setPublicacoes(publicacoes);
+            console.log(publicacao)
+            });
+            
+        })
       
+    })
   }, []);
 
-
-
-
-/*
+  /*
 
   axios.get('http://localhost:8080/imagens/152', { responseType: 'arraybuffer' })
   .then(response => {
@@ -60,7 +62,7 @@ function Home() {
     console.error(error);
   });*/
 
- /* const getImage = async (id) => {
+  /* const getImage = async (id) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/imagens/publicacao/${id}`
@@ -112,19 +114,20 @@ function Home() {
             <h1>Principais Publicações</h1>
             <div className={style["grid-container"]}>
               {publicacoes.length > 0 &&
-                  publicacoes.map((publicacao) => {
-                    return (
-                      <a className={style["grid-item"]} key={publicacao.id}>
-                        <div className={style["img-wrapper"]}>
-                         {image && <img className={style["img-item"]} src={image} />}
-                        </div>
-                        <div>
-                          <h2>{publicacao.titulo}</h2>
-                        </div>
-                      </a>
-                    );
-                  })
-                }
+                publicacoes.map((publicacao) => {
+                  return (
+                    <a className={style["grid-item"]} key={publicacao.id}>
+                      <div className={style["img-wrapper"]}>
+                        {publicacao.imagem && (
+                          <img className={style["img-item"]} src={publicacao.imagem} />
+                        )}
+                      </div>
+                      <div>
+                        <h2>{publicacao.titulo}</h2>
+                      </div>
+                    </a>
+                  );
+                })}
             </div>
           </div>
         </div>
