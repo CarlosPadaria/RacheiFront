@@ -75,11 +75,7 @@ ul {
   color: #5f4bb6;
   transition: 0.25s;
 }
-a:hover{
-  transition: 0.25s;
-  color: #5f4bb6;
 
-}
 
 .user-menu {
   display: flex;

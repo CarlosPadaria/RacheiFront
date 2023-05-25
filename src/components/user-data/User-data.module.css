@@ -141,6 +141,11 @@ input{
     align-items: center;
 }
 
+.hover-anchor:hover{
+    transition: 0.25s;
+    color: #5f4bb6;
+
+}
 
 @media(max-width: 1000px){
     .section-wrapper{

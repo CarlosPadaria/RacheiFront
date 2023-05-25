@@ -13,7 +13,7 @@ const DadosDaConta = () => {
           <section className={style["items"]}>
             <ul>
               <li>
-                <a href="dadosDaConta"><AssignmentIndIcon
+                <a className={style["hover-anchor"]} href="dadosDaConta"><AssignmentIndIcon
                 sx={{
                     fontSize: "2rem",
                 }}
@@ -21,7 +21,7 @@ const DadosDaConta = () => {
               </li>
               <li>
                 <a href="seguranca"
-                
+                className={style["hover-anchor"]}
                 ><ShieldIcon
                 
                 sx={{

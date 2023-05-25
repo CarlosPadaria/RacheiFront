@@ -14,6 +14,7 @@ function Home() {
   const [publicacoes, setPublicacoes] = useState([]);
   const [imagens, setImagens] = useState([]);
   const [image, setImage] = useState(null);
+  const [carregandoImagens, setCarregandoImagens] = useState(true);
   /*
   useEffect(() => {
     async function fetchPublications() {
@@ -26,28 +27,27 @@ function Home() {
   useEffect(() => {
     // Solicita as publicações
     axios.get("http://localhost:8080/publicacoes").then((response) => {
-      //response.data;
-     // console.log(response.data[0])
-     let publicacoes = response.data;
-      // setPublicacoes(response.data);
-     // const imagensIds = response.data.map((publicacao) => publicacao.id);
-      publicacoes
-        .map((publicacao) => {
-          axios
-            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
-            .then((responses) => {
-              
-              // Transformamos os dados binários da imagem em uma URL
-              publicacao.imagem = "data:image/png;base64," + responses.data[0].conteudo;
-              // const url = URL.createObjectURL(new Blob([response.data[0].conteudo]))
-           //   console.log(response.data[0].conteudo)
-            setPublicacoes(publicacoes);
-            console.log(publicacao)
-            });
-            
-        })
-      
-    })
+      let publicacoes = response.data;
+      let promises = []; // Array para armazenar as chamadas assíncronas
+
+      // Mapeia as publicações
+      publicacoes.map((publicacao) => {
+        let promise = axios
+          .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
+          .then((responses) => {
+            // Transformamos os dados binários da imagem em uma URL
+            publicacao.imagem =
+              "data:image/png;base64," + responses.data[0].conteudo;
+          });
+
+        promises.push(promise); // Adiciona a chamada assíncrona ao array de promises
+      });
+
+      // Aguarda a conclusão de todas as chamadas assíncronas
+      Promise.all(promises).then(() => {
+        setPublicacoes(publicacoes); // Atualiza as publicações depois que todas as imagens forem carregadas
+      });
+    });
   }, []);
 
   /*
@@ -119,11 +119,27 @@ function Home() {
                     <a className={style["grid-item"]} key={publicacao.id}>
                       <div className={style["img-wrapper"]}>
                         {publicacao.imagem && (
-                          <img className={style["img-item"]} src={publicacao.imagem} />
+                          <img
+                            className={style["img-item"]}
+                            src={publicacao.imagem}
+                          />
                         )}
                       </div>
-                      <div>
-                        <h2>{publicacao.titulo}</h2>
+                      <div className={style['publication-items-wrapper']}>
+                        <div>
+                          <h2>{publicacao.titulo}</h2>
+                        </div>
+                        <div className={style["grey"]}>
+                          <p>
+                            {publicacao.cidade} - {publicacao.estado}
+                          </p>
+                        </div>
+                        <div>
+                          <p>{publicacao.numPessoas} Vagas Imóvel</p>
+                        </div>
+                        <div>
+                          <p><strong>R$ {publicacao.precoDividir.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</strong> <span className={style['grey']}>/Mensal</span></p>
+                        </div>
                       </div>
                     </a>
                   );
