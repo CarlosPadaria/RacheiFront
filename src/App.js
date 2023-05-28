@@ -7,6 +7,7 @@ import DadosDaConta from "./components/user-data/DadosDaConta";
 import Seguranca from "./components/user-data/Seguranca";
 import Favoritos from "./components/home/Favoritos";
 import MinhasPublicacoes from "./components/home/MinhasPublicacoes";
+import Publicacao from "./components/home/Publicacao";
 import { AuthProvider } from "./AuthContext";
 import AuthContext from "./AuthContext";
 import "./index.css";
@@ -22,6 +23,7 @@ function App() {
             <Route path="/publicar" element={<Publicar />} />
             <Route path="/dadosDaConta" element={<DadosDaConta />} />
             <Route path="/seguranca" element={<Seguranca />} />
+            <Route path="/publicacao/:id" element={<Publicacao />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />

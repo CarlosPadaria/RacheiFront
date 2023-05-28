@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../AuthContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -15,6 +15,7 @@ function Home() {
   const [imagens, setImagens] = useState([]);
   const [image, setImage] = useState(null);
   const [carregandoImagens, setCarregandoImagens] = useState(true);
+
   /*
   useEffect(() => {
     async function fetchPublications() {
@@ -115,8 +116,9 @@ function Home() {
             <div className={style["grid-container"]}>
               {publicacoes.length > 0 &&
                 publicacoes.map((publicacao) => {
+                  const urlPublicacao = `Publicacao/${publicacao.id}`;
                   return (
-                    <a className={style["grid-item"]} key={publicacao.id}>
+                    <a href={urlPublicacao} className={style["grid-item"]} key={publicacao.id}>
                       <div className={style["img-wrapper"]}>
                         {publicacao.imagem && (
                           <img
