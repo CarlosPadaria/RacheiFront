@@ -28,6 +28,7 @@ html {
   margin-top: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
 }
 .publication-items-wrapper h2{
@@ -40,6 +41,7 @@ html {
   background-color: #fff;
   padding: 20px;
   display: flex;
+  position: relative;
   flex-direction: column;
   border-radius: 30px;
   text-align: center;
@@ -114,14 +116,13 @@ html {
   align-self: right;
   font-size: 5rem;
 }
-.flex{
-  display: flex;
-  justify-content: right;
-  align-items: center;
-}
+
 .button-icon{
   background-color: #fff;
   border: 0px;
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
 }
 .button-icon:hover{
   cursor: pointer;

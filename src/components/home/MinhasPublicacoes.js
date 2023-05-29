@@ -4,8 +4,8 @@ import { useAuth } from "../../AuthContext";
 import { useEffect, useState } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Link } from "react-router-dom";
-import {MenuItem } from "@mui/material";
-import {Menu} from "@mui/material";
+import { MenuItem } from "@mui/material";
+import { Menu } from "@mui/material";
 import axios from "axios";
 
 function MinhasPublicacoes() {
@@ -99,8 +99,8 @@ function MinhasPublicacoes() {
                             <span className={style["grey"]}>/Mensal</span>
                           </p>
                         </div>
-                        <div className={style["flex"]}>
-                          <button
+                        <div className={style['flex']}>
+                        <button
                             className={style["button-icon"]}
                             aria-controls="menu"
                             aria-haspopup="true"
@@ -110,23 +110,6 @@ function MinhasPublicacoes() {
                               sx={{ fontSize: "3rem" }}
                             ></SettingsIcon>
                           </button>
-                          <Menu
-                            className={style["menu"]}
-                            id="menu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                            keepMounted
-                          >
-                            <MenuItem component={Link} to="/Editar">
-                              Editar
-                            </MenuItem>
-                            <MenuItem onClick={()=>{
-                              alert("exlcluir?")
-                            }}>
-                              Excluir
-                            </MenuItem>
-                          </Menu>
                         </div>
                       </div>
                     </a>
@@ -136,6 +119,25 @@ function MinhasPublicacoes() {
           </div>
         </div>
       </main>
+      <Menu
+        //  className={style["menu"]}
+        id="menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        keepMounted
+      >
+        <MenuItem component={Link} to="/Editar">
+          Editar
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("exlcluir?");
+          }}
+        >
+          Excluir
+        </MenuItem>
+      </Menu>
     </div>
   );
 }
