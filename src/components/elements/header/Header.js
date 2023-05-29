@@ -26,7 +26,7 @@ function Header() {
   };
 
   const [state, setState] = useState({ left: false });
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, setUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +41,11 @@ function Header() {
     }
   }, [user, isLoading]);
 
+  const logout = () => {
+      setUser(null);
+      alert("oi")
+      localStorage.removeItem("user");
+  }
 
 
 
@@ -63,27 +68,22 @@ function Header() {
     >
       <ul>
         <li>
-          <Link to="publicar">Publicar</Link>
+          <Link to="/Publicar">Publicar</Link>
         </li>
         <li>
-          <Link to="/login">Gerenciar publicações</Link>
+          <Link to="/Login">Gerenciar publicações</Link>
         </li>
         <li>
-          <Link to="/minhasPublicacoes">Minhas publicações</Link>
+          <Link to="/MinhasPublicacoes">Minhas publicações</Link>
         </li>
         <li>
-        <Link to="/dadosDaConta">Perfil</Link>
+        <Link to="/DadosDaConta">Perfil</Link>
         </li>
         <li>
-          <Link to="/favoritos">Favoritos</Link>
+          <Link to="/Favoritos">Favoritos</Link>
         </li>
         <li>
-          <Link onClick={
-            () => {
-           //   logout();
-
-            }
-          } >Sair</Link>
+          <Link to="/" onClick={logout} >Sair</Link>
         </li>
       </ul>
     </div>
@@ -157,7 +157,9 @@ function Header() {
               <MenuItem
               component={Link} to="/favoritos"
               >Favoritos</MenuItem>
-              <MenuItem>Sair</MenuItem>
+              <MenuItem
+              onClick={logout}
+              >Sair</MenuItem>
             </Menu>
           </li>
           <li>
