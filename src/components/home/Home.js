@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../elements/header/Header";
 import style from "./Home.module.css";
 import SearchIcon from "@mui/icons-material/Search";
+
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../AuthContext";
@@ -51,35 +52,6 @@ function Home() {
     });
   }, []);
 
-  /*
-
-  axios.get('http://localhost:8080/imagens/152', { responseType: 'arraybuffer' })
-  .then(response => {
-    // Transformamos os dados binários da imagem em uma URL
-    const url = URL.createObjectURL(new Blob([response.data]));
-    setImage(url);
-  })
-  .catch(error => {
-    console.error(error);
-  });*/
-
-  /* const getImage = async (id) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/imagens/publicacao/${id}`
-      );
-      const tipo = response.data[0].tipo;
-      const conteudo = response.data[0].conteudo;
-
-      const blob = new Blob([conteudo], { type: tipo });
-      // Cria uma URL do blob para ser usada no <img> tag
-      const urlImagem = URL.createObjectURL(blob);
-      return urlImagem;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  };*/
 
   return (
     <div>

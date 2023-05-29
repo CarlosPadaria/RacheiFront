@@ -109,6 +109,24 @@ html {
   margin-top: 3rem;
 }
 
+.settings-icon{
+  justify-self: right;
+  align-self: right;
+  font-size: 5rem;
+}
+.flex{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.button-icon{
+  background-color: #fff;
+  border: 0px;
+}
+.button-icon:hover{
+  cursor: pointer;
+}
+
 @media (max-width: 768px){
   .searchbar input{
     font-size: 1rem;

@@ -71,7 +71,7 @@ function Header() {
           <Link to="/Publicar">Publicar</Link>
         </li>
         <li>
-          <Link to="/Login">Gerenciar publicações</Link>
+          <Link to="/GerenciarPublicacoes">Gerenciar publicações</Link>
         </li>
         <li>
           <Link to="/MinhasPublicacoes">Minhas publicações</Link>
@@ -119,13 +119,13 @@ function Header() {
         </div>
         <ul className={style['nav-list']}>
           <li>
-            <a className={style["align-icons"]} href="/gerenciar">
+            <a className={style["align-icons"]} href="/GerenciarPublicacoes">
               <ContentPasteIcon sx={{ fontSize: "2.25rem" }}></ContentPasteIcon>
               Gerenciar publicações
             </a>
           </li>
           <li>
-            <a className={style["align-icons"]} href="/minhasPublicacoes">
+            <a className={style["align-icons"]} href="/MinhasPublicacoes">
               <GridViewIcon sx={{ fontSize: "2.25rem" }}></GridViewIcon>Minhas
               publicações
             </a>
@@ -152,10 +152,10 @@ function Header() {
               keepMounted
             >
               <MenuItem 
-              component={Link} to="/dadosDaConta"
+              component={Link} to="/DadosDaConta"
               >Perfil</MenuItem>
               <MenuItem
-              component={Link} to="/favoritos"
+              component={Link} to="/Favoritos"
               >Favoritos</MenuItem>
               <MenuItem
               onClick={logout}
