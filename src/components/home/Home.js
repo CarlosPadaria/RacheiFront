@@ -13,18 +13,12 @@ import axios from "axios";
 function Home() {
   const { user, setUser, isLoading } = useAuth();
   const [publicacoes, setPublicacoes] = useState([]);
+  const [publicacoesFiltradas, setPublicacoesFiltradas] = useState([]);
   const [imagens, setImagens] = useState([]);
   const [image, setImage] = useState(null);
   const [carregandoImagens, setCarregandoImagens] = useState(true);
-
-  /*
-  useEffect(() => {
-    async function fetchPublications() {
-      const response = await axios.get("http://localhost:8080/publicacoes");
-      setPublicacoes(response.data);
-    }
-    fetchPublications();
-  }, []);*/
+  const [pesquisa, setPesquisa] = useState("");
+  const [pesquisaRealizada, setPesquisaRealizada] = useState(false);
 
   useEffect(() => {
     // Solicita as publicações
@@ -51,6 +45,16 @@ function Home() {
       });
     });
   }, []);
+  const exibirPublicacoes = pesquisaRealizada ? publicacoesFiltradas : publicacoes;
+
+  const pesquisarPorCidadeOuEstado = (consulta) => {
+    const publicacoesFiltradas = publicacoes.filter((publicacao) =>
+      publicacao.cidade.toLowerCase().includes(consulta.toLowerCase()) ||
+      publicacao.estado.toLowerCase().includes(consulta.toLowerCase())
+    );
+    setPublicacoesFiltradas(publicacoesFiltradas);
+    setPesquisaRealizada(true);
+  };
 
 
   return (
@@ -59,8 +63,12 @@ function Home() {
       <main className={style["main"]}>
         <div className={style["roxo"]}></div>
         <div className={style["searchbar"]}>
-          <input placeholder="Pequise por estado ou cidade ex: Santa Catarina, Florianópolis etc..."></input>
+          <input placeholder="Pequise por estado ou cidade ex: Santa Catarina, Florianópolis etc..."
+          onChange={(e) => setPesquisa(e.target.value)}
+          value={pesquisa}
+          ></input>
           <IconButton
+            onClick={() => pesquisarPorCidadeOuEstado(pesquisa)}
             className={style["search-icon"]}
             sx={{
               className: style["search-icon"],
@@ -87,7 +95,7 @@ function Home() {
             <h1>Principais Publicações</h1>
             <div className={style["grid-container"]}>
               {publicacoes.length > 0 &&
-                publicacoes.map((publicacao) => {
+                exibirPublicacoes.map((publicacao) => {
                   const urlPublicacao = `Publicacao/${publicacao.id}`;
                   return (
                     <a href={urlPublicacao} className={style["grid-item"]} key={publicacao.id}>
