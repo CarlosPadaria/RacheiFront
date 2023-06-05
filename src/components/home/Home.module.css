@@ -17,12 +17,12 @@ html {
   margin-top: 5rem;
   max-width: 100%;
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 3fr));
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 3fr));
   list-style: none;
   padding: 0;
   justify-content: left;
-  align-items: flex-start;
+  align-items: stretch;
   margin-bottom: 35px;
   max-width: 1920px;
 }
@@ -54,6 +54,7 @@ html {
   padding: 2rem;
   cursor: pointer;
   max-width: 420px;
+
  
 }
 
