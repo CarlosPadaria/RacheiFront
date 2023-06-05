@@ -15,11 +15,16 @@ html {
 }
 .grid-container {
   margin-top: 5rem;
+  max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-gap: 40px;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 3fr));
+  list-style: none;
+  padding: 0;
+  justify-content: left;
+  align-items: flex-start;
   margin-bottom: 35px;
-  width: 100%;
+  max-width: 1920px;
 }
 .grey{
   color: #8F8F8F;
@@ -37,6 +42,7 @@ html {
 }
 
 .grid-item {
+
   color: inherit;
   background-color: white;
   padding: 20px;
@@ -47,8 +53,8 @@ html {
   text-align: center;
   padding: 2rem;
   cursor: pointer;
-  margin-right: 1rem;
-  max-width: 450px;
+  max-width: 420px;
+ 
 }
 
 .img-item{
@@ -121,6 +127,12 @@ html {
 .button-icon{
   background-color: #fff;
   border: 0px;
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+}
+.button-icon-heart{
+  color: #5f4bb6;
   position: absolute;
   right: 25px;
   bottom: 15px;

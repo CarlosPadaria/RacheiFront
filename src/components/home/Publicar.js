@@ -44,16 +44,16 @@ function Publicar() {
   const navigate = useNavigate();
 
   const handleEstadoChange = (event) => {
-    // Carrega as cidades com base no estado selecionado
     let estadoId = event.target.value;
-    let estadoSelecionado = estados.find(estado => estado.id === estadoId);
+    let estadoSelecionado = estados.find((estado) => estado.id === estadoId);
     setNomeEstadoSelecionado(estadoSelecionado.nome);
     setEstadoSelecionado(estadoId);
     axios
-      .get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`
-      )
-      .then((response) => setCidades(response.data));
+      .get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+      .then((response) => {
+        const cidadesOrdenadas = response.data.sort((a, b) => a.nome.localeCompare(b.nome));
+        setCidades(cidadesOrdenadas);
+      });
   };
 
   const handleCidadeChange = (event) => {
@@ -65,10 +65,12 @@ function Publicar() {
   };
 
   useEffect(() => {
-    // Carrega os estados no primeiro select
     axios
       .get("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
-      .then((response) => setEstados(response.data));
+      .then((response) => {
+        const estadosOrdenados = response.data.sort((a, b) => a.nome.localeCompare(b.nome));
+        setEstados(estadosOrdenados);
+      });
   }, []);
 
   const formatarCep = (valor) => {
@@ -276,7 +278,21 @@ function Publicar() {
         },
       });
       setImagem(event.target.files);
-    } else {
+    }
+    else if(
+      Array.from(event.target.files).some((imagem) => imagem.size > 5000000)
+    ){
+      event.target.value = null;
+      setMensagemErro({
+        ...mensagemErro,
+        imagem: {
+          mensagem: "Selecione imagens com tamanho menor que 5MB",
+          deuErro: true,
+        },
+      });
+      setImagem(event.target.files);
+    }
+    else {
       setMensagemErro({
         ...mensagemErro,
         imagem: {
@@ -327,7 +343,7 @@ function Publicar() {
               },
             ]}
             value={inputs.titulo}
-            inputProps={{ maxLength: 100 }}
+            inputProps={{ maxLength: 50 }}
             error={mensagemErro.titulo.deuErro}
             onBlur={(e) => campoValido(inputs.titulo, "titulo")}
             helperText={mensagemErro.titulo.mensagem}

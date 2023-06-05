@@ -11,9 +11,12 @@ import axios from "axios";
 function MinhasPublicacoes() {
   const [publicacoes, setPublicacoes] = useState([]);
   const { user, setUser, isLoading } = useAuth();
+  const[idExcluir, setIdExcluir] = useState(null); // id da publicação que será excluída
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleMouseEnter = (event) => {
+  
+  const handleMouseEnter = (event, idPublicacao) => {
     event.preventDefault();
+    setIdExcluir(idPublicacao);
     setAnchorEl(!anchorEl ? event.currentTarget : null);
   };
 
@@ -104,7 +107,7 @@ function MinhasPublicacoes() {
                             className={style["button-icon"]}
                             aria-controls="menu"
                             aria-haspopup="true"
-                            onClick={handleMouseEnter}
+                            onClick={(event) => handleMouseEnter(event, publicacao.id)}
                           >
                             <SettingsIcon
                               sx={{ fontSize: "3rem" }}
@@ -132,7 +135,24 @@ function MinhasPublicacoes() {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            alert("exlcluir?");
+            let excluir = window.confirm("Deseja excluir a publicação?");
+            if (excluir) {
+              axios
+                .delete(
+                  `http://localhost:8080/publicacoes/${idExcluir}`
+                )
+                .then((response) => {
+                  setPublicacoes(
+                    publicacoes.filter((publicacao) => {
+                      return publicacao.id !== idExcluir;
+                    })
+                  )
+                  handleClose();
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
           }}
         >
           Excluir

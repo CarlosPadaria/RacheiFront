@@ -43,7 +43,7 @@ function Header() {
 
   const logout = () => {
       setUser(null);
-      alert("oi")
+   //   alert("oi")
       localStorage.removeItem("user");
   }
 
