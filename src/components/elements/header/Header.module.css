@@ -39,8 +39,8 @@ a {
 
 .nav-list li {
   letter-spacing: 1.5;
-  font-size: 1.11rem;
-  margin-left: 2rem;
+  font-size: 1rem;
+  margin-left: 1rem;
 }
 .nav-list {
   display: flex;
@@ -86,7 +86,7 @@ ul {
   border-radius: 50px;
   width: 100%;
   font-size: 1rem;
-  gap: 0.25rem;
+  
   transition: 0.25s;
 }
 .user-menu:hover{
@@ -117,18 +117,21 @@ ul {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap;
-  gap: 0.5rem;
+  flex-wrap: ellipsis;
+
 }
 .list li{
-  margin: 1rem;
+  margin: 0.25rem;
   text-decoration: none;
   color: black;
+
 }
 .list li a{
   text-decoration: none;
   color: black;
 }
+
+
 /*
 .header {
   width: 100%;

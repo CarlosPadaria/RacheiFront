@@ -332,13 +332,14 @@ function Publicar() {
         <form className={style["content"]}>
           <h2>Título</h2>
           <TextField
-            variant="filled"
+            variant="outlined"
             sx={[
               {
                 "&:after": {
                   borderColor: "#5F4BB6",
                   backgroundColor: "#342965",
                 },
+
                 fontSize: "1.5rem",
               },
             ]}
@@ -354,13 +355,13 @@ function Publicar() {
           ></TextField>
           <h2>Descrição</h2>
           <TextField
+          variant="outlined"
             value={inputs.descricao}
-            inputProps={{ maxLength: 2000 }}
             error={mensagemErro.descricao.deuErro}
             onBlur={(e) => campoValido(inputs.descricao, "descricao")}
             helperText={mensagemErro.descricao.mensagem}
             multiline
-            variant="filled"
+            textareaStyle={style['input']}
             sx={[
               {
                 "&:after": {
@@ -398,7 +399,7 @@ function Publicar() {
             onBlur={(e) => campoValido(inputs.numPessoas, "numPessoas")}
             helperText={mensagemErro.numPessoas.mensagem}
             error={mensagemErro.numPessoas.deuErro}
-            variant="filled"
+            variant="outlined"
             sx={[
               {
                 "&:after": {
@@ -427,7 +428,7 @@ function Publicar() {
             error={mensagemErro.precoTotal.deuErro}
             onBlur={(e) => campoValido(inputs.precoTotal, "precoTotal")}
             helperText={mensagemErro.precoTotal.mensagem}
-            variant="filled"
+            variant="outlined"
             sx={[
               {
                 "&:after": {
@@ -457,7 +458,7 @@ function Publicar() {
             error={mensagemErro.precoDividir.deuErro}
             onBlur={(e) => campoValido(inputs.precoDividir, "precoDividir")}
             helperText={mensagemErro.precoDividir.mensagem}
-            variant="filled"
+            variant="outlined"
             sx={[
               {
                 "&:after": {
@@ -475,7 +476,7 @@ function Publicar() {
           ></NumericFormat>
           <h2>Contato</h2>
           <TextField
-            variant="filled"
+             variant="outlined"
             sx={[
               {
                 "&:after": {
@@ -552,7 +553,7 @@ function Publicar() {
             <div className={style["endereco-item"]}>
               <h3>Logradouro</h3>
               <TextField
-                variant="filled"
+                 variant="filled"
                 sx={{
                   margin: "0 0 1rem 0",
                 }}
@@ -584,7 +585,7 @@ function Publicar() {
             <div className={style["endereco-item"]}>
               <h3>CEP</h3>
               <TextField
-                variant="filled"
+                 variant="filled"
                 error={mensagemErro.cep.deuErro}
                 inputProps={{ maxLength: 9 }}
                 onBlur={(e) => campoValido(inputs.cep, "cep")}
@@ -597,7 +598,7 @@ function Publicar() {
               ></TextField>
               <h3>Número</h3>
               <TextField
-                variant="filled"
+                 variant="filled"
                 error={mensagemErro.numero.deuErro}
                 inputProps={{ maxLength: 10 }}
                 onBlur={(e) => campoValido(inputs.numero, "numero")}
@@ -612,7 +613,7 @@ function Publicar() {
           <h2>Pagamento</h2>
           <h3>Chave pix</h3>
           <TextField
-            variant="filled"
+             variant="outlined"
             className={style["input"]}
             inputProps={{ maxLength: 100 }}
             error={mensagemErro.chavePix.deuErro}

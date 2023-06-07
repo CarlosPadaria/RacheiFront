@@ -120,14 +120,13 @@ function Header() {
         <ul className={style['nav-list']}>
           <li>
             <a className={style["align-icons"]} href="/GerenciarPublicacoes">
-              <ContentPasteIcon sx={{ fontSize: "2.25rem" }}></ContentPasteIcon>
-              Gerenciar publicações
+              <ContentPasteIcon sx={{ fontSize: "1.89rem" }}></ContentPasteIcon>
+              Gerenciar posts
             </a>
           </li>
           <li>
             <a className={style["align-icons"]} href="/MinhasPublicacoes">
-              <GridViewIcon sx={{ fontSize: "2.25rem" }}></GridViewIcon>Minhas
-              publicações
+              <GridViewIcon sx={{ fontSize: "2rem" }}></GridViewIcon>Meus posts
             </a>
           </li>
           <li>
