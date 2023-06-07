@@ -67,23 +67,25 @@ function Header() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <ul>
-        <li>
-          <Link to="/Publicar">Publicar</Link>
+     
+        <li className={style["linksDin"]}>
+          <Link className={style["linksDin"]} to="/Publicar">Publicar</Link>
         </li>
-        <li>
-          <Link to="/GerenciarPublicacoes">Gerenciar publicações</Link>
+      
+        <li className={style["linksDin"]}>
+          <Link className={style["linksDin"]} to="/GerenciarPublicacoes">Gerenciar publicações</Link>
         </li>
-        <li>
-          <Link to="/MinhasPublicacoes">Minhas publicações</Link>
+        <li className={style["linksDin"]}>
+          <Link className={style["linksDin"]} to="/MinhasPublicacoes">Minhas publicações</Link>
         </li>
-        <li>
-        <Link to="/DadosDaConta">Perfil</Link>
+        <li className={style["linksDin"]}>
+        <Link className={style["linksDin"]} to="/DadosDaConta">Perfil</Link>
         </li>
-        <li>
-          <Link to="/Favoritos">Favoritos</Link>
+        <li className={style["linksDin"]}>
+          <Link className={style["linksDin"]} to="/Favoritos">Favoritos</Link>
         </li>
-        <li>
-          <Link to="/" onClick={logout} >Sair</Link>
+        <li className={style["linksDin"]}>
+          <Link className={style["linksDin"]} to="/" onClick={logout} >Sair</Link>
         </li>
       </ul>
     </div>
