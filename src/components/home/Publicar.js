@@ -360,7 +360,7 @@ function Publicar() {
             }}
             className={style["input"]}
           ></TextField>
-          <h2>Quantas pessoas vão "rachar"?</h2>
+          <h2>Quantas pessoas vão dividir o imóvel ?</h2>
           <TextField
             value={inputs.numPessoas}
             type="text"

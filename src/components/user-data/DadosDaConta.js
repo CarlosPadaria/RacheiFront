@@ -54,15 +54,32 @@ const DadosDaConta = () => {
   // });
 
 
-  const handleCadastro = async (e) => {
+  const handleAtualizar= async (e) => {
 
     e.preventDefault();
 
-    const formDataDadosConta = new FormData();
 
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/usuarios/${user.id}`,
+        inputs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        
+      );
+      localStorage.setItem('user',JSON.stringify(response.data));
+      setUser(response.data);
 
-    formDataDadosConta.append("Nome Usuario", inputs.nome);
-    formDataDadosConta.append("Email", inputs.email)
+      console.log("Dados atualizados:", response.data)
+      
+      
+    } catch (error) {
+      console.log("Erro ao atualizar", error)
+      console.log(user.id)
+    }
 
   }
 
@@ -107,18 +124,18 @@ const DadosDaConta = () => {
             <div className={style["content-items"]}>
                 <h2>Dados da conta</h2> 
                 <label placeholder="Nome de usuário" for="nome">Nome de usuário</label>
-                <input id="nome" name="nome" value={user.nome}></input>
+                <input id="nome" name="nome" value={user?.nome} disabled></input>
 
                 <label placeholder="Email" for="email">Email</label>
-                <input id="email" name="email" value={user.email}></input>
+                <input id="email" name="email" value={user?.email} disabled ></input>
 
                 <label placeholder="Senha" for="senha">Senha</label>
                 <Input
                   className={style["disabled"]}
-                  id="adornment-password"
+                  id="senha"
                   type={showPassword ? "text" : "password"}
-                  disabled
-                  value={user.senha}
+              
+                  value={user?.senha}
                   // remove the bottom outline
                   endAdornment={
                     <InputAdornment position="end">
@@ -134,10 +151,11 @@ const DadosDaConta = () => {
                   }
                   disableUnderline
                 />
+                
 
                 <label for="cpf">CPF</label>
-                <input className={style['disabled']} id="cpf" name="cpf" disabled value={user.cpf}></input>
-                <button className={style['submit']}>Salvar Alterações</button>
+                <input className={style['disabled']} id="cpf" name="cpf" disabled value={user?.cpf}></input>
+                
             </div>
             
           </section>

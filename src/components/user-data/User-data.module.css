@@ -71,6 +71,16 @@ input{
     font-size: 1.25rem;
 }
 
+.input{
+    width: 100%;
+    border-radius: 30px;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    outline: none;
+    border: black 1px solid;
+    font-size: 1.25rem;
+}
+
 .disabled{
     background-color: #D9D9D9;
     width: 100%;
