@@ -115,6 +115,11 @@ input{
     background-color: #e60000;
     cursor: pointer;
 }
+.danger-button:disabled{
+    background-color: #6d0000;
+    color: #636262;
+    cursor: pointer;
+}
 .submit{
     margin-top: 1rem;
     margin-bottom: 1rem;

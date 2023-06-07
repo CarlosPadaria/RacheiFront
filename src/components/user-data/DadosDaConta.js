@@ -124,14 +124,15 @@ const DadosDaConta = () => {
             <div className={style["content-items"]}>
                 <h2>Dados da conta</h2> 
                 <label placeholder="Nome de usuário" for="nome">Nome de usuário</label>
-                <input id="nome" name="nome" value={user?.nome} disabled></input>
+                <input className={style["disabled"]} id="nome" name="nome" value={user?.nome} disabled></input>
 
                 <label placeholder="Email" for="email">Email</label>
-                <input id="email" name="email" value={user?.email} disabled ></input>
+                <input id="email" className={style["disabled"]} name="email" value={user?.email} disabled ></input>
 
                 <label placeholder="Senha" for="senha">Senha</label>
                 <Input
                   className={style["disabled"]}
+                  disabled
                   id="senha"
                   type={showPassword ? "text" : "password"}
               

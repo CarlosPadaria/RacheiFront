@@ -33,6 +33,15 @@ const Seguranca = () => {
   };
 
 
+  const [showPasswordDel, setShowPasswordDel] = useState(false);
+
+  const handleClickShowPasswordDel = () => setShowPasswordDel((show) => !show);
+
+  const handleMouseDownPasswordDel= (event) => {
+    event.preventDefault();
+  };
+
+
   const { user, setUser, isLoading, setIsLoading } = useAuth();
 
   const [checkBox, setCheck] = useState(false)
@@ -678,18 +687,18 @@ const Seguranca = () => {
                   onChange={(event) => {
                   setInputs({ ...inputs, senhaDeletar: event.target.value });
                  }}
-                 type={showPassword ? "text" : "password"}
+                 type={showPasswordDel ? "text" : "password"}
                  value={inputs.senhaDeletar}
                  InputProps={{
                   endAdornment: (
                     <InputAdornment>
                        <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={handleClickShowPasswordDel}
+                      onMouseDown={handleMouseDownPasswordDel}
                       edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPasswordDel ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                     </InputAdornment>
                   ),
@@ -705,18 +714,18 @@ const Seguranca = () => {
                   onChange={(event) => {
                   setInputs({ ...inputs, confirmarSenhaDeletar: event.target.value });
                  }}
-                 type={showPassword ? "text" : "password"}
+                 type={showPasswordDel ? "text" : "password"}
                  value={inputs.confirmarSenhaDeletar}
                  InputProps={{
                   endAdornment: (
                     <InputAdornment>
                        <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={handleClickShowPasswordDel}
+                      onMouseDown={handleMouseDownPasswordDel}
                       edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPasswordDel ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                     </InputAdornment>
                   ),
