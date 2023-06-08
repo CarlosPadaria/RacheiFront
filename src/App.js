@@ -8,6 +8,7 @@ import Seguranca from "./components/user-data/Seguranca";
 import Favoritos from "./components/home/Favoritos";
 import MinhasPublicacoes from "./components/home/MinhasPublicacoes";
 import Publicacao from "./components/home/Publicacao";
+import Editar from "./components/home/Editar";
 import { AuthProvider } from "./AuthContext";
 import AuthContext from "./AuthContext";
 import "./index.css";
@@ -24,6 +25,7 @@ function App() {
             <Route path="/dadosDaConta" element={<DadosDaConta />} />
             <Route path="/seguranca" element={<Seguranca />} />
             <Route path="/publicacao/:id" element={<Publicacao />} />
+            <Route path="/editar/:id" element={<Editar />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />

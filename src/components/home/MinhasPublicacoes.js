@@ -11,12 +11,12 @@ import axios from "axios";
 function MinhasPublicacoes() {
   const [publicacoes, setPublicacoes] = useState([]);
   const { user, setUser, isLoading } = useAuth();
-  const[idExcluir, setIdExcluir] = useState(null); // id da publicação que será excluída
+  const[idPublicacao, setIdPublicacao] = useState(0); // id da publicação que será excluída
   const [anchorEl, setAnchorEl] = useState(null);
   
-  const handleMouseEnter = (event, idPublicacao) => {
+  const handleMouseEnter = (event, id) => {
     event.preventDefault();
-    setIdExcluir(idPublicacao);
+    setIdPublicacao(id);
     setAnchorEl(!anchorEl ? event.currentTarget : null);
   };
 
@@ -130,7 +130,7 @@ function MinhasPublicacoes() {
         onClose={handleClose}
         keepMounted
       >
-        <MenuItem component={Link} to="/Editar">
+        <MenuItem component={Link} to={`/Editar/${idPublicacao}`}>
           Editar
         </MenuItem>
         <MenuItem
@@ -139,12 +139,12 @@ function MinhasPublicacoes() {
             if (excluir) {
               axios
                 .delete(
-                  `http://localhost:8080/publicacoes/${idExcluir}`
+                  `http://localhost:8080/publicacoes/${idPublicacao}`
                 )
                 .then((response) => {
                   setPublicacoes(
                     publicacoes.filter((publicacao) => {
-                      return publicacao.id !== idExcluir;
+                      return publicacao.id !== idPublicacao;
                     })
                   )
                   handleClose();
