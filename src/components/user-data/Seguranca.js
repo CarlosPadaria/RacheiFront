@@ -585,29 +585,30 @@ const Seguranca = () => {
             <section className={style["content"]}>
               <div className={style["content-items"]}>
                 <h2>Alterar dados</h2>
-                <label for="nome">Nome</label>
+                <label className={style['dados-label']} for="nome">Nome</label>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   inputProps={{ maxLength: 100 }}
                   error={mensagemErro.nome.deuErro}
                   helperText={mensagemErro.nome.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, nome: event.target.value });
                  }}
-
+                 className={style["input"]}
           
           
                   value={inputs.nome}
                 ></TextField>
 
-                <label for="nova-senha">Nova senha</label>
+                <label className={style['dados-label']} for="nova-senha">Nova senha</label>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   error={mensagemErro.senha.deuErro}
                   helperText={mensagemErro.senha.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, senha: event.target.value });
                  }}
+                 className={style["input"]}
                  type={showPassword ? "text" : "password"}
                  value={inputs.senha}
                  InputProps={{
@@ -628,16 +629,17 @@ const Seguranca = () => {
                 ></TextField>
                
                 
-                <label for="confirmar-senha">Confirmar Senha</label>
+                <label  className={style['dados-label']} for="confirmar-senha">Confirmar Senha</label>
                 
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   inputProps={{ maxLength: 100 }}
                   error={mensagemErro.confirmarSenha.deuErro}
                   helperText={mensagemErro.confirmarSenha.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, confirmarSenha: event.target.value });
                  }}
+                 className={style["input"]}
                  type={showPassword ? "text" : "password"}
                  value={inputs.confirmarSenha}
                  InputProps={{
@@ -664,29 +666,31 @@ const Seguranca = () => {
               <div className={style["content-items"]}>
                 <h2 className={style["danger"]}>Desativar Conta</h2>
                 
-                <label for="email">Email</label>
+                <label className={style['dados-label']} for="email">Email</label>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   inputProps={{ maxLength: 100 }}
                   error={mensagemErro.email.deuErro}
                   helperText={mensagemErro.email.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, email: event.target.value });
                  }}
+                 className={style["input"]}
 
           
           
                   value={inputs.email}
                 ></TextField>
 
-                <label for="nova-senha">Senha</label>
+                <label className={style['dados-label']} for="nova-senha">Senha</label>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   error={mensagemErro.senhaDeletar.deuErro}
                   helperText={mensagemErro.senhaDeletar.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, senhaDeletar: event.target.value });
                  }}
+                 className={style["input"]}
                  type={showPasswordDel ? "text" : "password"}
                  value={inputs.senhaDeletar}
                  InputProps={{
@@ -706,14 +710,15 @@ const Seguranca = () => {
                 
                 ></TextField>
 
-                <label>Confirmar Senha</label>
+                <label className={style['dados-label']}>Confirmar Senha</label>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   error={mensagemErro.confirmarSenhaDeletar.deuErro}
                   helperText={mensagemErro.confirmarSenhaDeletar.mensagem}
                   onChange={(event) => {
                   setInputs({ ...inputs, confirmarSenhaDeletar: event.target.value });
                  }}
+                 className={style["input"]}
                  type={showPasswordDel ? "text" : "password"}
                  value={inputs.confirmarSenhaDeletar}
                  InputProps={{

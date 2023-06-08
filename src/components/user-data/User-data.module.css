@@ -61,6 +61,11 @@ label{
     flex-direction: column;
 }
 
+.content-items .dados-label{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 input{
     width: 100%;
     border-radius: 30px;
@@ -132,6 +137,13 @@ input{
     padding: 1.5rem;
     width: 50%;
 }
+
+.input fieldset {
+    border-radius: 30px;
+    border-color: #000;
+    color: #000;
+  }
+
 
 .submit:hover{
     background-color: #4d3aa5;

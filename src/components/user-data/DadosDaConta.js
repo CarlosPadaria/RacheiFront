@@ -83,14 +83,6 @@ const DadosDaConta = () => {
 
   }
 
-  
-
-
-
-
-
-
-
 
   return (
     <div className={style['dados-wrapper']}>
@@ -130,28 +122,7 @@ const DadosDaConta = () => {
                 <input id="email" className={style["disabled"]} name="email" value={user?.email} disabled ></input>
 
                 <label placeholder="Senha" for="senha">Senha</label>
-                <Input
-                  className={style["disabled"]}
-                  disabled
-                  id="senha"
-                  type={showPassword ? "text" : "password"}
-              
-                  value={user?.senha}
-                  // remove the bottom outline
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  disableUnderline
-                />
+                <input id="senha" className={style["disabled"]} type="password" name="senha" value={user?.senha} disabled ></input>
                 
 
                 <label for="cpf">CPF</label>
