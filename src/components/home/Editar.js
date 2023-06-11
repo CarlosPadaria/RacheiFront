@@ -1,22 +1,37 @@
 import React from "react";
 import Header from "../elements/header/Header";
 import style from "./Publicar.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
 import { TextField, Select, Menu } from "@mui/material";
 import { MenuItem, Button } from "@mui/material";
 import { NumericFormat } from "react-number-format";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function Editar() {
-  const [imagem, setImagem] = useState({});
+  const { id } = useParams();
+  const [resetKey, setResetKey] = useState(Date.now());
+  const [imagem, setImagem] = useState(null);
   const [idPublicacao, setIdPublicacao] = useState(0);
+  const [imagemMostrar, setImagemMostrar] = useState([]);
+  const [imagemCarregada, setImagemCarregada] = useState(false);
+  const [imagemInicial, setImagemInicial] = useState([]);
+  const fileInputRef = useRef(null);
+  const initialState = {
+    accept: "image/*",
+    multiple: true,
+  };
   const [inputs, setInputs] = useState({
     precoDividir: 1,
     precoTotal: 1,
     numPessoas: 1,
   });
+  const handleCancelar = () => {
+    fileInputRef.current.value = null;
+    fileInputRef.current.files = null;
+  };
   const [saveImagens, setSaveImagens] = useState(false);
   const [estados, setEstados] = useState([]);
   const [cidades, setCidades] = useState([]);
@@ -24,6 +39,8 @@ function Editar() {
   const [cidadeSelecionada, setCidadeSelecionada] = useState("");
   const [nomeEstadoSelecionado, setNomeEstadoSelecionado] = useState("");
   const [nomeCidadeSelecionada, setNomeCidadeSelecionada] = useState("");
+  const [publicacao, setPublicacao] = useState(null);
+  const [cidadesCarregadas, setCidadesCarregadas] = useState(false);
   const [mensagemErro, setMensagemErro] = useState({
     titulo: { mensagem: "", deuErro: false },
     descricao: { mensagem: "", deuErro: false },
@@ -49,9 +66,13 @@ function Editar() {
     setNomeEstadoSelecionado(estadoSelecionado.nome);
     setEstadoSelecionado(estadoId);
     axios
-      .get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`)
+      .get(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`
+      )
       .then((response) => {
-        const cidadesOrdenadas = response.data.sort((a, b) => a.nome.localeCompare(b.nome));
+        const cidadesOrdenadas = response.data.sort((a, b) =>
+          a.nome.localeCompare(b.nome)
+        );
         setCidades(cidadesOrdenadas);
       });
   };
@@ -59,19 +80,89 @@ function Editar() {
   const handleCidadeChange = (event) => {
     let cidadeId = event.target.value;
     let cidade = cidades.find((cidade) => cidade.id === cidadeId);
-  
+
     setCidadeSelecionada(cidadeId);
     setNomeCidadeSelecionada(cidade.nome);
   };
 
   useEffect(() => {
+    if (imagemCarregada == false) {
+      axios
+        .get(`http://localhost:8080/imagens/publicacao/${id}`)
+        .then((response) => {
+          const imagens = response.data;
+          //  setImagem(imagens);
+          setImagemMostrar(imagens);
+          setImagemInicial(imagens);
+          setImagemCarregada(true);
+        });
+    }
+  }, [id]);
+
+  useEffect(() => {
     axios
       .get("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
       .then((response) => {
-        const estadosOrdenados = response.data.sort((a, b) => a.nome.localeCompare(b.nome));
+        const estadosOrdenados = response.data.sort((a, b) =>
+          a.nome.localeCompare(b.nome)
+        );
         setEstados(estadosOrdenados);
+        setEstadoSelecionado(
+          estadosOrdenados.find((estado) => estado.nome === publicacao.estado)
+            .id
+        );
+        setNomeEstadoSelecionado(
+          estadosOrdenados.find((estado) => estado.nome === publicacao.estado)
+            .nome
+        );
       });
-  }, []);
+  }, [publicacao]);
+
+  useEffect(() => {
+    if (publicacao != null && cidadesCarregadas == false) {
+      axios
+        .get(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSelecionado}/municipios`
+        )
+        .then((response) => {
+          const cidadesOrdenadas = response.data.sort((a, b) =>
+            a.nome.localeCompare(b.nome)
+          );
+          setCidades(cidadesOrdenadas);
+          setCidadeSelecionada(
+            cidadesOrdenadas.find((cidade) => cidade.nome === publicacao.cidade)
+              .id
+          );
+          setNomeCidadeSelecionada(
+            cidadesOrdenadas.find((cidade) => cidade.nome === publicacao.cidade)
+              .nome
+          );
+          setCidadesCarregadas(true);
+        });
+    }
+  }, [estadoSelecionado]);
+
+  useEffect(() => {
+    if (publicacao == null) {
+      axios.get(`http://localhost:8080/publicacoes/${id}`).then((response) => {
+        const publicacao = response.data;
+        setPublicacao(publicacao);
+        setInputs({
+          titulo: publicacao.titulo,
+          descricao: publicacao.descricao,
+          numPessoas: publicacao.numPessoas,
+          precoTotal: publicacao.precoTotal,
+          precoDividir: publicacao.precoDividir,
+          contato: publicacao.contato,
+          logradouro: publicacao.logradouro,
+          bairro: publicacao.bairro,
+          numero: publicacao.numero,
+          cep: publicacao.cep,
+          chavePix: publicacao.chavePix,
+        });
+      });
+    }
+  }, [id]);
 
   const formatarCep = (valor) => {
     const cep = valor.replace(/\D/g, ""); // Remove tudo que não é número
@@ -98,13 +189,17 @@ function Editar() {
   };
 
   useEffect(() => {
-    if (saveImagens === true) {
+    if (saveImagens === true && imagem == null) {
+      navigate("/");
+      
+    } else if (saveImagens === true && imagem != null) {
+      handleDelete();
       handleUpload();
     }
   }, [saveImagens]);
 
   const handleValidarCampos = (e) => {
-    let mensagensErro = { ...mensagemErro};
+    let mensagensErro = { ...mensagemErro };
     let valido = true;
     if (!campoValido(inputs.titulo, "titulo")) {
       mensagensErro.titulo = {
@@ -114,7 +209,7 @@ function Editar() {
       valido = false;
     }
     if (!campoValido(inputs.descricao, "descricao")) {
-    //  alert("descricao")
+      //  alert("descricao")
       mensagensErro.descricao = {
         mensagem: "Campo obrigatório",
         deuErro: true,
@@ -126,91 +221,90 @@ function Editar() {
         mensagem: "Campo obrigatório",
         deuErro: true,
       };
-      
+
       valido = false;
     }
     if (!campoValido(inputs.precoTotal, "precoTotal")) {
       mensagensErro.precoTotal = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.precoDividir, "precoDividir")) {
       mensagensErro.precoDividir = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.contato, "contato")) {
       mensagensErro.contato = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(estadoSelecionado, "estado")) {
       mensagensErro.estado = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(cidadeSelecionada, "cidade")) {
       mensagensErro.cidade = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.logradouro, "logradouro")) {
       mensagensErro.logradouro = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.bairro, "bairro")) {
       mensagensErro.bairro = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.numero, "numero")) {
       mensagensErro.numero = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.cep, "cep")) {
       mensagensErro.cep = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
     if (!campoValido(inputs.chavePix, "chavePix")) {
       mensagensErro.chavePix = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
     }
-    if (imagem[0].name == undefined || imagem[0].name == "") {
+    /*if (imagem[0].name == undefined || imagem[0].name == "") {
       mensagensErro.imagem = {
         mensagem: "Campo obrigatório",
         deuErro: true,
-      }
+      };
       valido = false;
-    }
+    }*/
     setMensagemErro(mensagensErro);
-    if(!valido){
+    if (!valido) {
       return false;
     }
-  
 
     return true;
   };
@@ -238,8 +332,8 @@ function Editar() {
       //  formDataCadastro.append("imagem", imagem)
 
       try {
-        const response = await axios.post(
-          "http://localhost:8080/publicacoes",
+        const response = await axios.put(
+          `http://localhost:8080/publicacoes/${id}`,
           formDataCadastro,
           {
             headers: {
@@ -248,7 +342,7 @@ function Editar() {
           }
         );
         setSaveImagens(true);
-        setIdPublicacao(response.data.id);
+        //  setIdPublicacao(response.data.id);
         console.log("Publicação criada:", response.data);
       } catch (error) {
         console.log("Erro ao criar publicação:", error);
@@ -268,20 +362,9 @@ function Editar() {
         },
       });
       setImagem(event.target.files);
-    } else if (files.length < 1) {
-      event.target.value = null;
-      setMensagemErro({
-        ...mensagemErro,
-        imagem: {
-          mensagem: "Selecione pelo menos uma imagem",
-          deuErro: true,
-        },
-      });
-      setImagem(event.target.files);
-    }
-    else if(
+    } else if (
       Array.from(event.target.files).some((imagem) => imagem.size > 5000000)
-    ){
+    ) {
       event.target.value = null;
       setMensagemErro({
         ...mensagemErro,
@@ -291,8 +374,11 @@ function Editar() {
         },
       });
       setImagem(event.target.files);
-    }
-    else {
+    } else if (files.length < 1) {
+      event.target.value = null;
+      setImagem(null);
+      // setImagem(event.target.files);
+    } else {
       setMensagemErro({
         ...mensagemErro,
         imagem: {
@@ -300,27 +386,46 @@ function Editar() {
           deuErro: false,
         },
       });
+      console.log(event.target.files);
+      console.log(event.target.value);
+      //setImagemMostrar(arr);
+      const fileList = event.target.files;
+      const imageUrls = [];
+
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const imageUrl = URL.createObjectURL(file);
+        imageUrls.push(imageUrl);
+      }
+      console.log(imageUrls);
+      setImagemMostrar(imageUrls);
       setImagem(event.target.files);
     }
   };
   const handleUpload = (event) => {
     // event.preventDefault();
-    
+
     for (let i = 0; i < imagem.length; i++) {
       const formData = new FormData();
       formData.append("imagem", imagem[i]);
-      formData.append("idPublicacao", idPublicacao);
+      formData.append("idPublicacao", id);
       axios
         .post("http://localhost:8080/imagens", formData)
         .then((response) => {
           console.log(response.data);
-          
-          navigate('/');
+
+          navigate("/");
         })
         .catch((error) => {
           alert(error);
         });
     }
+  };
+
+  const handleDelete = (event) => {
+    axios.delete(`http://localhost:8080/imagens/publicacao/${id}`).then(() => {
+      console.log("Imagens deletadas");
+    });
   };
 
   return (
@@ -355,13 +460,13 @@ function Editar() {
           ></TextField>
           <h2>Descrição</h2>
           <TextField
-          variant="outlined"
+            variant="outlined"
             value={inputs.descricao}
             error={mensagemErro.descricao.deuErro}
             onBlur={(e) => campoValido(inputs.descricao, "descricao")}
             helperText={mensagemErro.descricao.mensagem}
             multiline
-            textareaStyle={style['input']}
+            textareaStyle={style["input"]}
             sx={[
               {
                 "&:after": {
@@ -476,7 +581,7 @@ function Editar() {
           ></NumericFormat>
           <h2>Contato</h2>
           <TextField
-             variant="outlined"
+            variant="outlined"
             sx={[
               {
                 "&:after": {
@@ -497,17 +602,49 @@ function Editar() {
             className={style["input"]}
           ></TextField>
           <h2>Imagens</h2>
+
           <TextField
+            //sexo2
             type="file"
             inputProps={{
               accept: "image/*",
               multiple: true,
             }}
+            inputRef={fileInputRef}
+            //sexo
             onChange={handleImagemSelecionada}
             onBlur={handleImagemSelecionada}
             error={mensagemErro.imagem.deuErro}
             helperText={mensagemErro.imagem.mensagem}
           ></TextField>
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              setImagemMostrar(imagemInicial);
+              setImagem(null);
+              handleCancelar();
+            }}
+            className={style["cancelar-button"]}
+          >
+            Cancelar
+          </button>
+          {imagemMostrar?.length > 0 && (
+            <div className={style["imagem-container"]}>
+              {imagemMostrar.map((imagem, index) => (
+                <div key={index} className={style["imagem-item"]}>
+                  <img
+                    src={
+                      imagem.conteudo
+                        ? "data:image/png;base64," + imagem.conteudo
+                        : imagem
+                    }
+                    alt="Imagem do imóvel"
+                    className={style["imagem"]}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           <h2>Endereço</h2>
           <div className={style["endereco"]}>
             <div className={style["endereco-item"]}>
@@ -553,7 +690,7 @@ function Editar() {
             <div className={style["endereco-item"]}>
               <h3>Logradouro</h3>
               <TextField
-                 variant="filled"
+                variant="filled"
                 sx={{
                   margin: "0 0 1rem 0",
                 }}
@@ -585,7 +722,7 @@ function Editar() {
             <div className={style["endereco-item"]}>
               <h3>CEP</h3>
               <TextField
-                 variant="filled"
+                variant="filled"
                 error={mensagemErro.cep.deuErro}
                 inputProps={{ maxLength: 9 }}
                 onBlur={(e) => campoValido(inputs.cep, "cep")}
@@ -598,7 +735,7 @@ function Editar() {
               ></TextField>
               <h3>Número</h3>
               <TextField
-                 variant="filled"
+                variant="filled"
                 error={mensagemErro.numero.deuErro}
                 inputProps={{ maxLength: 10 }}
                 onBlur={(e) => campoValido(inputs.numero, "numero")}
@@ -613,7 +750,7 @@ function Editar() {
           <h2>Pagamento</h2>
           <h3>Chave pix</h3>
           <TextField
-             variant="outlined"
+            variant="outlined"
             className={style["input"]}
             inputProps={{ maxLength: 100 }}
             error={mensagemErro.chavePix.deuErro}
@@ -628,7 +765,7 @@ function Editar() {
             className={style["submit"]}
             onClick={handleCadastro}
             type="submit"
-            value="Publicar"
+            value="Editar"
           ></input>
         </form>
       </main>
