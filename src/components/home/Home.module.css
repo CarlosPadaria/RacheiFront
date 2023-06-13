@@ -18,7 +18,7 @@ html {
   max-width: 100%;
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   list-style: none;
   padding: 0;
   justify-content: left;
@@ -35,6 +35,7 @@ html {
   flex-direction: column;
   justify-content: center;
   gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 .publication-items-wrapper h2{
   margin-top: 0.5rem;
