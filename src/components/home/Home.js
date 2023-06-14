@@ -136,7 +136,6 @@ function Home() {
         </div>
         <div className={style["content-wrapper"]}>
           <div className={style["content"]}>
-            <h1>Principais Publicações</h1>
             <div className={style["grid-container"]}>
               {publicacoes.length > 0 &&
                 exibirPublicacoes.map((publicacao) => {
