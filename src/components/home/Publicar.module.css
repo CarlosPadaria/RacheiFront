@@ -38,13 +38,28 @@
 .imagem-container{
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.imagem-item{
+  display: inline-block;
+  border: 5px solid #f1f1f1; /* cor da borda */
+  border-radius: 10px; /* arredondamento da borda */
+  padding: 10px; /* espaço interno entre a borda e a imagem */
+  object-fit: cover; /* alterado para "cover" */
+  /* tamanho desejado para as imagens */
+  background-color: #fff;
+}
+.imagem{
+  object-fit: contain;
+  max-width: 400px;
 
+  height: 220px;
+}
 .select{
   width: 100%;
   padding: 0.25rem;
