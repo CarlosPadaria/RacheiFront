@@ -10,7 +10,7 @@ import axios from "axios";
 
 function MinhasPublicacoes() {
   const [publicacoes, setPublicacoes] = useState([]);
-  const { user, setUser, isLoading } = useAuth();
+  const { user, setUser, isLoading, token} = useAuth();
   const[idPublicacao, setIdPublicacao] = useState(0); // id da publicação que será excluída
   const [anchorEl, setAnchorEl] = useState(null);
   
@@ -27,7 +27,12 @@ function MinhasPublicacoes() {
     if (isLoading == false) {
       // Solicita as publicações
       axios
-        .get("http://localhost:8080/publicacoes/usuario/" + user.id)
+        .get("http://localhost:8080/publicacoes/usuario/" + user.id,{
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        })
         .then((response) => {
           let publicacoes = response.data;
           let promises = []; // Array para armazenar as chamadas assíncronas
@@ -35,7 +40,12 @@ function MinhasPublicacoes() {
           // Mapeia as publicações
           publicacoes.map((publicacao) => {
             let promise = axios
-              .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
+              .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`,{
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
               .then((responses) => {
                 // Transformamos os dados binários da imagem em uma URL
                 publicacao.imagem =
@@ -49,9 +59,18 @@ function MinhasPublicacoes() {
           Promise.all(promises).then(() => {
             setPublicacoes(publicacoes); // Atualiza as publicações depois que todas as imagens forem carregadas
           });
-        });
+        }).catch((error) => {
+          const logout = () => {
+            setUser(null);
+            localStorage.removeItem("token");
+             
+           //   alert("oi")
+        
+          };
+          logout();
+        })
     }
-  }, [user]);
+  }, [isLoading]);
 
   return (
     <div className={style["minhasPublicacoes-wrapper"]}>
@@ -139,7 +158,12 @@ function MinhasPublicacoes() {
             if (excluir) {
               axios
                 .delete(
-                  `http://localhost:8080/publicacoes/${idPublicacao}`
+                  `http://localhost:8080/publicacoes/${idPublicacao}`,{
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
                 )
                 .then((response) => {
                   setPublicacoes(

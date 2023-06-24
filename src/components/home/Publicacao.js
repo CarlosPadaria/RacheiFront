@@ -10,7 +10,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { useAuth } from "../../AuthContext";
 function Publicacao(){
+    const {token, isLoading, setUser }= useAuth();
     const {id} = useParams();
     const [publicacao, setPublicacao] = useState({});
     const [imagens, setImagens] = useState([]);
@@ -20,16 +22,37 @@ function Publicacao(){
     ]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/publicacoes/${id}`).then((response) => {
+        if(isLoading == false){
+        axios.get(`http://localhost:8080/publicacoes/${id}`,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
             setPublicacao(response.data);
-            console.log(response.data);
-        });
-
-        axios.get(`http://localhost:8080/imagens/publicacao/${id}`).then((response) => {
-            setImagens(response.data);
-            console.log(response.data);
+         //   console.log(response.data);
+        }).catch((error) => {
+            const logout = () => {
+                setUser(null);
+                localStorage.removeItem("token");
+                 
+               //   alert("oi")
+            
+              };
+              logout();
         })
-    }, []);
+
+        axios.get(`http://localhost:8080/imagens/publicacao/${id}`,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            setImagens(response.data);
+         //   console.log(response.data);
+        })
+    }
+    }, [isLoading]);
 
     return (
         <div>
@@ -65,8 +88,8 @@ function Publicacao(){
                         <div className={style['margin']}>
                             <h3>Valor Original: R${publicacao.precoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})} </h3>
                         </div>
-                        <div className={style['row']}>
-                            <button className={style['submit']}>Rachar</button>
+                       <div className={style['row']}>
+                            
                         </div>
                     </div>
                     <div className={style['content-footer']}>

@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
-  const { user, setUser, isLoading, setIsLoading } = useAuth();
+  const { user, setUser, isLoading, setIsLoading, token, setToken } = useAuth();
   const [inputs, setInputs] = useState({
     nome: "",
     email: "",
@@ -240,11 +240,21 @@ function Cadastro() {
           "http://localhost:8080/usuarios",
           inputs
         );
-        setUser(response.data);
-        localStorage.setItem("user", JSON.stringify(response.data));  
+
+           // Requisição de login
+      const loginResponse = await axios.post(
+        "http://localhost:8080/login",
+        {
+          email: inputs.email,
+          senha: inputs.senha
+        }
+      );
+
+        setToken(loginResponse.data.token);
+        localStorage.setItem("token", JSON.stringify(loginResponse.data.token));  
         //console.log(response.data); // aqui você pode tratar a resposta da API
       } catch (error) {
-        alert(error)
+      //  alert(error)
           setMensagemErroCadastro("Usuário já cadastrado!");
       }
     }

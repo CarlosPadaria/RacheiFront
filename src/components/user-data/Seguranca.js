@@ -42,7 +42,7 @@ const Seguranca = () => {
   };
 
 
-  const { user, setUser, isLoading, setIsLoading } = useAuth();
+  const { user, setUser, isLoading, setIsLoading, token, setToken } = useAuth();
 
   const [checkBox, setCheck] = useState(false)
   const [inputs, setInputs] = useState({
@@ -292,18 +292,31 @@ const Seguranca = () => {
           {
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
           }
           
         );
-        localStorage.setItem('user',JSON.stringify(response.data));
-        setUser(response.data);
+          
+        setUser(
+          user => ({
+            ...user,
+            nome: inputs.nome,
+          })
+        )
   
-        console.log("Dados atualizados:", response.data)
+       // console.log("Dados atualizados:", response.data)
         
         
       } catch (error) {
-        console.log("Erro ao atualizar", error)
+        const logout = () => {
+          setUser(null);
+          localStorage.removeItem("token");
+           
+         //   alert("oi")
+      
+        };
+        logout();
         
       }
     }
@@ -422,18 +435,7 @@ const Seguranca = () => {
           },
         }));
         valido = false
-      } else if(senha !== user.senha){
-        setMensagensErro((mensagemErro) => ({
-          ...mensagemErro,
-         senhaDeletar: {
-            mensagem: "Senha incorreta",
-            deuErro: true,
-          },
-        }));
-        valido = false
-      }
-      
-      
+      } 
       else {
         setMensagensErro((mensagemErro) => ({
           ...mensagemErro,
@@ -519,20 +521,30 @@ const Seguranca = () => {
               {
                 headers: {
                   "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`,
+                },
+                data: {
+                  senha: inputs.senha, // Substitua pela senha real do usuário
                 },
               }
-              
             );
         
               setUser(null);
-              alert("oi")
-              localStorage.removeItem("user");
+            
+              localStorage.removeItem("token");
       
             console.log("Dados Apagados:", response.data)
             
             
           } catch (error) {
-            console.log("Erro ao apagar", error)
+            setMensagensErro((mensagemErro) => ({
+              ...mensagemErro,
+             senhaDeletar: {
+                mensagem: "Senha incorreta",
+                deuErro: true,
+              },
+            }));
+        
             
           }
         

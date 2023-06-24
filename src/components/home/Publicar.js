@@ -40,7 +40,7 @@ function Publicar() {
     cep: { mensagem: "", deuErro: false },
     chavePix: { mensagem: "", deuErro: false },
   });
-  const { user } = useAuth();
+  const { user, setUser, token, setToken } = useAuth();
   const navigate = useNavigate();
 
   const handleEstadoChange = (event) => {
@@ -244,6 +244,7 @@ function Publicar() {
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -311,14 +312,19 @@ function Publicar() {
       formData.append("imagem", imagem[i]);
       formData.append("idPublicacao", idPublicacao);
       axios
-        .post("http://localhost:8080/imagens", formData)
+        .post("http://localhost:8080/imagens", formData,{
+          headers: {
+            "Content-Type": "Multipart/form-data",
+            "Authorization": `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response.data);
           
           navigate('/');
         })
         .catch((error) => {
-          alert(error);
+       //   alert(error);
         });
     }
   };

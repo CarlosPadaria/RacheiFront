@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function Login() {
-  const { user, setUser, isLoading, setIsLoading } = useAuth();
+  const { user, setUser, isLoading, setIsLoading, token, setToken } = useAuth();
   const [inputs, setInputs] = useState({
     email: "",
     senha: "",
@@ -100,9 +100,11 @@ function Login() {
 
     if (emailValido && senhaValida) {
       try{
-        const response = await axios.post('http://localhost:8080/usuarios/login', inputs);
-        localStorage.setItem('user',JSON.stringify(response.data));
-        setUser(response.data);
+        const response = await axios.post('http://localhost:8080/login', inputs);
+
+        localStorage.setItem('token', JSON.stringify(response.data.token));
+        setToken(response.data.token);
+        //setUser(response.data);
       }catch(error){
       //  alert(error)
         setErrorMessage("Email ou senha incorretos");

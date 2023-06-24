@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function Favoritos() {
-  const { user, setUser, isLoading } = useAuth();
+  const { user, setUser, isLoading, token } = useAuth();
   const [publicacoes, setPublicacoes] = useState([]);
 
   const handleFavoriteClick = async (event, publicacaoId) => {
@@ -25,9 +25,14 @@ function Favoritos() {
     // Atualize o estado das publicações
     try {
       // Chame o endpoint para favoritar a publicação
-      await axios.put(`http://localhost:8080/publicacoes/${publicacaoId}/favoritar`, {
+      await axios.put(`http://localhost:8080/publicacoes/${publicacaoId}/favoritar`,{
         usuarioId: user.id,
         favoritado: publicacaoAtualizada.favorito
+      }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      } 
       });
   
       // Atualize o estado das publicações
@@ -44,7 +49,12 @@ function Favoritos() {
   useEffect(() => {
     // Solicita as publicações
     if (user != null) {
-      axios.get(`http://localhost:8080/publicacoes/favoritos/usuarios/${user.id}`).then((response) => {
+      axios.get(`http://localhost:8080/publicacoes/favoritos/usuarios/${user.id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }).then((response) => {
         let publicacoes = response.data;
         let promises = []; // Array para armazenar as chamadas assíncronas
 
@@ -59,7 +69,12 @@ function Favoritos() {
           });
 
           let promise = axios
-            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
+            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`,{
+              headers:{
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              }
+            })
             .then((responses) => {
               // Transformamos os dados binários da imagem em uma URL
               publicacao.imagem =
@@ -73,8 +88,18 @@ function Favoritos() {
         Promise.all(promises).then(() => {
           setPublicacoes(publicacoes); // Atualiza as publicações depois que todas as imagens forem carregadas
         });
-      });
+      }).catch((error) => {
+        const logout = () => {
+          setUser(null);
+          localStorage.removeItem("token");
+           
+         //   alert("oi")
+      
+        };
+        logout();
+      })
     }
+
   }, [user]);
 
 

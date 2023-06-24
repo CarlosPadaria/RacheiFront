@@ -57,7 +57,7 @@ function Editar() {
     cep: { mensagem: "", deuErro: false },
     chavePix: { mensagem: "", deuErro: false },
   });
-  const { user } = useAuth();
+  const { user, token , setUser} = useAuth();
   const navigate = useNavigate();
 
   const handleEstadoChange = (event) => {
@@ -86,9 +86,14 @@ function Editar() {
   };
 
   useEffect(() => {
-    if (imagemCarregada == false) {
+    if (imagemCarregada == false && token != null) {
       axios
-        .get(`http://localhost:8080/imagens/publicacao/${id}`)
+        .get(`http://localhost:8080/imagens/publicacao/${id}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           const imagens = response.data;
           //  setImagem(imagens);
@@ -97,9 +102,10 @@ function Editar() {
           setImagemCarregada(true);
         });
     }
-  }, [id]);
+  }, [id, token]);
 
   useEffect(() => {
+    if(publicacao != null){
     axios
       .get("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
       .then((response) => {
@@ -116,6 +122,7 @@ function Editar() {
             .nome
         );
       });
+    }
   }, [publicacao]);
 
   useEffect(() => {
@@ -143,8 +150,13 @@ function Editar() {
   }, [estadoSelecionado]);
 
   useEffect(() => {
-    if (publicacao == null) {
-      axios.get(`http://localhost:8080/publicacoes/${id}`).then((response) => {
+    if (publicacao == null && token != null) {
+      axios.get(`http://localhost:8080/publicacoes/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }).then((response) => {
         const publicacao = response.data;
         setPublicacao(publicacao);
         setInputs({
@@ -162,7 +174,7 @@ function Editar() {
         });
       });
     }
-  }, [id]);
+  }, [id, token]);
 
   const formatarCep = (valor) => {
     const cep = valor.replace(/\D/g, ""); // Remove tudo que não é número
@@ -194,7 +206,7 @@ function Editar() {
       
     } else if (saveImagens === true && imagem != null) {
       handleDelete();
-      handleUpload();
+     
     }
   }, [saveImagens]);
 
@@ -338,6 +350,7 @@ function Editar() {
           {
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
           }
         );
@@ -410,20 +423,38 @@ function Editar() {
       formData.append("imagem", imagem[i]);
       formData.append("idPublicacao", id);
       axios
-        .post("http://localhost:8080/imagens", formData)
+        .post("http://localhost:8080/imagens", formData,{
+          headers: {
+            "Content-Type": "Multipart/form-data",
+            "Authorization": `Bearer ${token}`
+          }
+        })
         .then((response) => {
           console.log(response.data);
 
           navigate("/");
         })
         .catch((error) => {
-          alert(error);
+          const logout = () => {
+            setUser(null);
+            localStorage.removeItem("token");
+             
+           //   alert("oi")
+        
+          };
+          logout();
         });
     }
   };
 
   const handleDelete = (event) => {
-    axios.delete(`http://localhost:8080/imagens/publicacao/${id}`).then(() => {
+    axios.delete(`http://localhost:8080/imagens/publicacao/${id}`,{
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    }).then(() => {
+      handleUpload();
       console.log("Imagens deletadas");
     });
   };

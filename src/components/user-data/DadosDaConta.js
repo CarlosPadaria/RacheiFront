@@ -24,7 +24,7 @@ const DadosDaConta = () => {
     event.preventDefault();
   };
 
-  const { user, setUser, isLoading, setIsLoading } = useAuth();
+  const { user, setUser, isLoading, setIsLoading, token, setToken } = useAuth();
   const [inputs, setInputs] = useState({
     nome: "",
     email: "",
@@ -66,12 +66,13 @@ const DadosDaConta = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
         
       );
-      localStorage.setItem('user',JSON.stringify(response.data));
-      setUser(response.data);
+     // localStorage.setItem('user',JSON.stringify(response.data));
+      setToken(token);
 
       console.log("Dados atualizados:", response.data)
       
@@ -120,11 +121,7 @@ const DadosDaConta = () => {
 
                 <label placeholder="Email" for="email">Email</label>
                 <input id="email" className={style["disabled"]} name="email" value={user?.email} disabled ></input>
-
-                <label placeholder="Senha" for="senha">Senha</label>
-                <input id="senha" className={style["disabled"]} type="password" name="senha" value={user?.senha} disabled ></input>
                 
-
                 <label for="cpf">CPF</label>
                 <input className={style['disabled']} id="cpf" name="cpf" disabled value={user?.cpf}></input>
                 

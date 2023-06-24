@@ -42,9 +42,11 @@ function Header() {
   }, [user, isLoading]);
 
   const logout = () => {
-      setUser(null);
+    setUser(null);
+    localStorage.removeItem("token");
+     
    //   alert("oi")
-      localStorage.removeItem("user");
+
   }
 
 
@@ -70,10 +72,6 @@ function Header() {
      
         <li className={style["linksDin"]}>
           <Link className={style["linksDin"]} to="/Publicar">Publicar</Link>
-        </li>
-      
-        <li className={style["linksDin"]}>
-          <Link className={style["linksDin"]} to="/GerenciarPublicacoes">Gerenciar publicações</Link>
         </li>
         <li className={style["linksDin"]}>
           <Link className={style["linksDin"]} to="/MinhasPublicacoes">Minhas publicações</Link>
@@ -121,14 +119,8 @@ function Header() {
         </div>
         <ul className={style['nav-list']}>
           <li>
-            <a className={style["align-icons"]} href="/GerenciarPublicacoes">
-              <ContentPasteIcon sx={{ fontSize: "1.89rem" }}></ContentPasteIcon>
-              Gerenciar posts
-            </a>
-          </li>
-          <li>
             <a className={style["align-icons"]} href="/MinhasPublicacoes">
-              <GridViewIcon sx={{ fontSize: "2rem" }}></GridViewIcon>Meus posts
+              <GridViewIcon sx={{ fontSize: "2rem" }}></GridViewIcon>Minhas publicações
             </a>
           </li>
           <li>

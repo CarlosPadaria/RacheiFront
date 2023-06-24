@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function Home() {
-  const { user, setUser, isLoading } = useAuth();
+  const { user, setUser, isLoading , token, setToken} = useAuth();
   const [publicacoes, setPublicacoes] = useState([]);
   const [publicacoesFiltradas, setPublicacoesFiltradas] = useState([]);
   const [imagens, setImagens] = useState([]);
@@ -36,7 +36,14 @@ function Home() {
       await axios.put(`http://localhost:8080/publicacoes/${publicacaoId}/favoritar`, {
         usuarioId: user.id,
         favoritado: publicacaoAtualizada.favorito
-      });
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+      
+      );
   
       // Atualize o estado das publicações
       setPublicacoes([...publicacoes]);
@@ -53,7 +60,12 @@ function Home() {
   useEffect(() => {
     // Solicita as publicações
     if (user != null) {
-      axios.get("http://localhost:8080/publicacoes").then((response) => {
+      axios.get("http://localhost:8080/publicacoes", {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }).then((response) => {
         let publicacoes = response.data;
         let promises = []; // Array para armazenar as chamadas assíncronas
 
@@ -68,7 +80,12 @@ function Home() {
           });
 
           let promise = axios
-            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`)
+            .get(`http://localhost:8080/imagens/publicacao/${publicacao.id}`,{
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+            })
             .then((responses) => {
               // Transformamos os dados binários da imagem em uma URL
               publicacao.imagem =
@@ -82,6 +99,15 @@ function Home() {
         Promise.all(promises).then(() => {
           setPublicacoes(publicacoes); // Atualiza as publicações depois que todas as imagens forem carregadas
         });
+      }).catch((error) => {
+        const logout = () => {
+          setUser(null);
+          localStorage.removeItem("token");
+           
+         //   alert("oi")
+      
+        };
+        logout();
       });
     }
   }, [user]);
